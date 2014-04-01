@@ -43,6 +43,7 @@
 @property(nonatomic,strong)NSString *college;
 @property(nonatomic,strong)NSString *shoes;
 @property(nonatomic,strong)NSString *size;
+@property(nonatomic,strong)NSString *status;
 
 @property(nonatomic,strong)NSMutableArray *guanzhuArray;
 @property(nonatomic,strong)NSMutableArray *visitorsArray;

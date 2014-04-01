@@ -26,7 +26,7 @@
         [iconBImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",data.iconB]] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         [self addSubview:iconBImageView];
         
-        nameALabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 65, 70, 25)];
+        nameALabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 65, 90, 25)];
         nameALabel.text = [NSString stringWithFormat:@"%@",data.teamNameA];
         nameALabel.textAlignment = UITextAlignmentCenter;
         nameALabel.backgroundColor = [UIColor clearColor];
@@ -34,7 +34,7 @@
         nameALabel.font = [UIFont boldSystemFontOfSize:13];
         [self addSubview:nameALabel];
         
-        nameBLabel = [[UILabel alloc]initWithFrame:CGRectMake(320 - 20 - 70, 65, 70, 25)];
+        nameBLabel = [[UILabel alloc]initWithFrame:CGRectMake(320 - 20 - 70-10, 65, 90, 25)];
         nameBLabel.text = [NSString stringWithFormat:@"%@",data.teamNameB];
         nameBLabel.textAlignment = UITextAlignmentCenter;
         nameBLabel.backgroundColor = [UIColor clearColor];

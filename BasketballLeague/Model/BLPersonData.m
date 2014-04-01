@@ -34,6 +34,7 @@
         _fenmu = [dic valueForKey:@"fenmu"];
         
         _teamid = [dic valueForKey:@"teamid"];
+        _status = dic[@"status"];
         
         _teamName = [dic valueForKey:@"teamName"];
         _role = [dic valueForKey:@"role"];

@@ -583,7 +583,7 @@ typedef enum {
     if (tableView.tag == 100) {
         return teamListArray.count;
     }else if (tableView.tag == 101){
-        return scholls.count + 1;
+        return scholls.count;
     }else{
         return villageListArray.count;
     }

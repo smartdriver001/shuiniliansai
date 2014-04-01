@@ -51,7 +51,9 @@
 #import "BLTextField.h"
 #import "BLFindPwdViewController.h"
 #import "BLRegViewController.h"
+
 #import "BLGoldViewController.h"
+#import "BLResetPwd.h"
 
 @interface BLMyViewController ()<CXPhotoBrowserDataSource, CXPhotoBrowserDelegate,buttonClickDelegate,IBActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,didClickDelegate,ChangeIconDelegate,LogOffDelegate,InitUID,UITextFieldDelegate>
 {
@@ -576,9 +578,10 @@
                 }
             }
             
-            [[self.view viewWithTag:9090]removeFromSuperview];
             [_tableView reloadData];
-//            _tableView.hidden = NO;
+            _tableView.hidden = NO;
+            [self removeLoginView];
+            [self removePwdView];
         }else{
             [ShowLoading showErrorMessage:personData.msg view:self.view];
         }
@@ -797,7 +800,6 @@
     return navBarView;
 }
 
-//更换头像
 -(void)changeIcon{
     isIcon = YES;
     [self showAddPhotoAction:nil];
@@ -944,9 +946,14 @@
 //    UIImageView  *imageView = (UIImageView *)[self.view viewWithTag:101];
     // UIImagePickerControllerOriginalImage 原始图片
     // UIImagePickerControllerEditedImage 编辑后图片
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    if (!image) {
-        image = [info objectForKey:UIImagePickerControllerEditedImage];
+    UIImage *tempImage ;
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if (image) {
+//        image = [info objectForKey:UIImagePickerControllerEditedImage];
+        tempImage = [self scaleImage:image toScale:1.0];
+    }else{
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        tempImage = [self scaleImage:image toScale:1.0];
     }
 //    imageView.image = image;
     
@@ -956,7 +963,6 @@
 //    NSString *file = [[NSString alloc] initWithBytes:data length:NUMBER_OF_CHARS encoding:NSUTF8StringEncoding];
     NSString *mfilePath = [NSString stringWithFormat:@"photo.jpg"];
     
-    UIImage *tempImage = [self scaleImage:image toScale:0.3];
     [self saveImage:tempImage WithName:mfilePath];
     iconImage = tempImage;
     [self upload];
@@ -1078,6 +1084,9 @@
 //        [self requestData:nil];
     }
     [_tableView reloadData];
+    _tableView.hidden = YES;
+    [self removePwdView];
+    [self removeLoginView];
     self.photoDataSource = [NSMutableArray array];
     [self initRgithButton];
 }
@@ -1098,11 +1107,16 @@
         if (!personData) {
             
             uid = [[BLUtils globalCache]stringForKey:@"uid"];
-            if (uid.length > 0) {
-                [self requestData:nil];
-                [self initRgithButton];
+            NSString *status = [[BLUtils globalCache]stringForKey:@"status"];
+            if (![status isEqualToString:@""] && [status intValue] == 0 ) {
+                [self initResetPwd];
             }else{
-                [self initLoginView];
+                if (uid.length > 0) {
+                    [self requestData:nil];
+                    [self initRgithButton];
+                }else{
+                    [self initLoginView];
+                }
             }
         }else{
             _tableView.hidden = NO;
@@ -1205,7 +1219,7 @@
     forgetPwd.frame = CGRectMake(200, 336-64+5, 80, 21);
     [forgetPwd setTitle:@"注册" forState:UIControlStateNormal];
     forgetPwd.titleLabel.font = [UIFont boldSystemFontOfSize:16.0f];
-    [forgetPwd setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+//    [forgetPwd setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [forgetPwd addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
     [loginView addSubview:forgetPwd];
     
@@ -1272,6 +1286,7 @@
     
     [ShowLoading showWithMessage:@"登录中..." view:self.view];
     NSString *path = [NSString stringWithFormat:@"signin/?username=%@&passwd=%@",username.text,password.text];
+    path = [BLUtils encode:path];
     
     [BLPersonData globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
         
@@ -1285,37 +1300,46 @@
             if ([personData.msg isEqualToString:@"succ"]) {
                 
                 [[BLUtils globalCache]setString:personData.uid forKey:@"uid"];
+                [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",personData.status] forKey:@"status"];
                 uid = personData.uid;
                 [[BLUtils appDelegate]setAPTags:personData.uid];//像服务器发送uid
+                
                 [self removeLoginView];
-                
-                [newHeaderView setDatas:personData];
-                if (personUID) {
-                    newHeaderView.idLabel.text = [NSString stringWithFormat:@"ID：%@",personUID];;
+                if ([personData.status intValue] == 0) {
+                    
+                    [self initResetPwd];
+                    
                 }else{
-                    newHeaderView.idLabel.text = [NSString stringWithFormat:@"ID：%@",uid];
-                }
-                if (fromString) {
-                    newHeaderView.takePhotoBtn.hidden = YES;
-                }else{
-                    newHeaderView.takePhotoBtn.hidden = NO;
-                }
-                [self addNavBarTitle:personData.name action:nil];
-                self.title = personData.name;
-                
-                [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",personData.teamid] forKey:@"teamid"];
-                
-                if (personUID == nil) {
-                    if (personData.teamid == NULL || [personData.teamid isEqual:@""]) {
-                        [[BLUtils globalCache]setString:@"No" forKey:@"isTeam"];
+                    
+                    [newHeaderView setDatas:personData];
+                    if (personUID) {
+                        newHeaderView.idLabel.text = [NSString stringWithFormat:@"ID：%@",personUID];;
                     }else{
-                        [[BLUtils globalCache]setString:@"Yes" forKey:@"isTeam"];
+                        newHeaderView.idLabel.text = [NSString stringWithFormat:@"ID：%@",uid];
                     }
+                    if (fromString) {
+                        newHeaderView.takePhotoBtn.hidden = YES;
+                    }else{
+                        newHeaderView.takePhotoBtn.hidden = NO;
+                    }
+                    [self addNavBarTitle:personData.name action:nil];
+                    self.title = personData.name;
+                    
+                    [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",personData.teamid] forKey:@"teamid"];
+                    
+                    if (personUID == nil) {
+                        if (personData.teamid == NULL || [personData.teamid isEqual:@""]) {
+                            [[BLUtils globalCache]setString:@"No" forKey:@"isTeam"];
+                        }else{
+                            [[BLUtils globalCache]setString:@"Yes" forKey:@"isTeam"];
+                        }
+                    }
+                    
+                    _tableView.hidden = NO;
+                    [_tableView reloadData];
+                    [self initRgithButton];
+                    
                 }
-                
-                _tableView.hidden = NO;
-                [_tableView reloadData];
-                [self initRgithButton];
                 
             }else{
                 [ShowLoading showErrorMessage:personData.msg view:self.view];
@@ -1336,19 +1360,131 @@
     [[BLUtils appDelegate].tabBarController setTabBarHidden:YES animated:YES];
 }
 
+-(void)initResetPwd{
+    
+    [resetPwdView removeFromSuperview];
+    resetPwdView = nil;
+    CGRect cgrect = self.view.frame;
+    cgrect.origin = CGPointMake(0, 0);
+    resetPwdView = [[UIView alloc]initWithFrame:cgrect];
+    
+    _tableView.hidden = YES;
+    /* 输入框背景图 */
+    UIImage *image = [[UIImage imageNamed:@"textBg.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+    
+    for (int i=0; i<3; i++) {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20+(i*44+i*2), 280, 44)];
+        imageView.image = image;
+        
+        [resetPwdView addSubview:imageView];
+        
+        BLTextField *textfield = [[BLTextField alloc]initWithFrame:CGRectMake(30,26+(i*44)+(2*i), 200, 32)];
+        textfield.font = [UIFont boldSystemFontOfSize:17.0f];
+        textfield.backgroundColor = [UIColor clearColor];
+        textfield.textColor = [UIColor colorWithHexString:@"#666666"];
+        textfield.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        if (i==0) {
+            textfield.placeholder = @"当前密码";
+            [textfield setReturnKeyType:UIReturnKeyNext];
+        }else if (i==1){
+            textfield.placeholder = @"新密码";
+            [textfield setReturnKeyType:UIReturnKeyNext];
+        }else{
+            textfield.placeholder = @"确认新密码";
+            [textfield setReturnKeyType:UIReturnKeyDone];
+        }
+        
+        textfield.delegate = self;
+        textfield.tag = 189+i;
+        
+        [resetPwdView addSubview:textfield];
+    }
+    
+    UIButton *commitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    commitButton.frame = CGRectMake(20, 180, 281, 44);
+    [commitButton commitStyle];
+    [commitButton setTitle:@"完成" forState:UIControlStateNormal];
+    [commitButton addTarget:self action:@selector(resetPwdAction) forControlEvents:UIControlEventTouchUpInside];
+    commitButton.tag = 101;
+    [resetPwdView addSubview:commitButton];
+    
+    [self.view addSubview:resetPwdView];
+}
+
+-(void)resetPwdAction{
+    
+    UILabel *pwd = (UILabel *)[resetPwdView viewWithTag:191];
+    UILabel *pwd2 = (UILabel *)[resetPwdView viewWithTag:190];
+    if (![pwd.text isEqualToString:pwd2.text]) {
+        [ShowLoading showErrorMessage:@"新密码与确认密码不一致！" view:self.view];
+        return;
+    }
+    BLTextField *oldPwd = (BLTextField *)[resetPwdView viewWithTag:189];
+    
+    [self hideKeyboard];
+    /*uid	int	true	 	球员序号
+     oldpasswd	string	true	 	旧密码
+     newpasswd	string	true	 	新密码
+     status	int	false		是否强制修改密码	 0强制修改密码 1不强制 默认0*/
+    NSString *path = [NSString stringWithFormat:@"user/rePasswd/?uid=%@&oldpasswd=%@&newpasswd=%@&status=1",uid,oldPwd.text,pwd2.text];
+    path = [BLUtils encode:path];
+    [ShowLoading showWithMessage:showloading view:self.view];
+    [BLResetPwd globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
+        [ShowLoading hideLoading:self.view];
+        if (error) {
+            return ;
+        }
+        if (posts.count > 0) {
+            BLResetPwd *resetPwd = [posts objectAtIndex:0];
+            if ([resetPwd.msg isEqualToString:@"succ"]) {
+                [[BLUtils globalCache]setString:@"1" forKey:@"status"];
+                [[BLUtils globalCache]setString:resetPwd.uid forKey:@"uid"];
+                [self removePwdView];
+                if (!personData) {
+                    [self requestData:resetPwd.uid];
+                }
+            }else{
+                [ShowLoading showErrorMessage:resetPwd.msg view:self.view];
+            }
+        }
+    } path:path];
+}
+
+-(void)hideKeyboard{
+    [[resetPwdView viewWithTag:189] resignFirstResponder];
+    [[resetPwdView viewWithTag:190] resignFirstResponder];
+    [[resetPwdView viewWithTag:191] resignFirstResponder];
+}
+
+-(void)removePwdView{
+    [resetPwdView removeFromSuperview];
+    _tableView.hidden = NO;
+}
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    if (textField.tag == 9080) {
-        [password becomeFirstResponder];
+    
+    if (textField.tag == 189) {
+        [[resetPwdView viewWithTag:190]becomeFirstResponder];
+    }else if (textField.tag == 190){
+        [[resetPwdView viewWithTag:191]becomeFirstResponder];
+    }else if (textField.tag == 191){
+        [self resetPwdAction];
     }else{
-        [self resignResponer];
-        [self LoginAction];
+        
+        if (textField.tag == 9080) {
+            [password becomeFirstResponder];
+        }else{
+            [self resignResponer];
+            [self LoginAction];
+        }
+        
     }
     return YES;
 }// called when 'return' key pressed. return NO to ignore.
 
 
-//注册键盘通知事件
 -(void)showKeyboard{
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -1362,7 +1498,6 @@
     [password resignFirstResponder];
 }
 
-//显示键盘
 -(void)keyboardDidShow{
     
     loginy = (password.frame.origin.y+216-3-64)-self.view.frame.size.height;
@@ -1379,7 +1514,6 @@
     }];
 }
 
-//隐藏键盘
 -(void)keyboardDidHide{
     [UIView animateWithDuration:0.2f animations:^{
         if (iPhone5 && ios7) {

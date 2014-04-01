@@ -32,14 +32,14 @@
 //        iconBImageView.backgroundColor = [UIColor redColor];
         [self addSubview:iconBImageView];
         
-        nameALabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 70, 70, 25)];
+        nameALabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 70, 90, 25)];
         nameALabel.textAlignment = UITextAlignmentCenter;
         nameALabel.backgroundColor = [UIColor clearColor];
         nameALabel.textColor = [UIColor colorWithHexString:@"FFFFFF"];
         nameALabel.font = [UIFont boldSystemFontOfSize:13];
         [self addSubview:nameALabel];
         
-        nameBLabel = [[UILabel alloc]initWithFrame:CGRectMake(320 - 20 - 70, 70, 70, 25)];
+        nameBLabel = [[UILabel alloc]initWithFrame:CGRectMake(320 - 20 - 70-10, 70, 90, 25)];
         nameBLabel.textAlignment = UITextAlignmentCenter;
         nameBLabel.backgroundColor = [UIColor clearColor];
         nameBLabel.textColor = [UIColor colorWithHexString:@"FFFFFF"];

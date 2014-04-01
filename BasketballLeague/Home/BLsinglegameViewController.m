@@ -13,8 +13,10 @@
 #import "BLSingleUser.h"
 #import "BLSinglegameCell.h"
 #import "BLMyViewController.h"
+#import "BLShareWXViewController.h"
+#import "UIViewController+MJPopupViewController.h"
 
-@interface BLsinglegameViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface BLsinglegameViewController ()<UITableViewDataSource,UITableViewDelegate,DismissModelView>
 {
     UITableView * _tableView;
     NSString *uid;
@@ -50,6 +52,7 @@
     [[BLUtils globalCache]setString:@"homePer" forKey:@"per"];
     
     uid = [[BLUtils globalCache]stringForKey:@"uid"];
+    [self addNavRightText:@"分享" action:@selector(share)];
 //    [self addLeftNavItem:@selector(leftButtonClick)];
     
 //    [self addNavText:@"统计" action:nil];
@@ -316,6 +319,69 @@
         
     } path:path];
 
+}
+
+-(void)share{
+    
+    BLShareWXViewController *share = [[BLShareWXViewController alloc]initWithNibName:@"BLShareWXViewController" bundle:nil];
+    UIImage *image = [self screenshot];
+    [[BLUtils globalCache]setImage:image forKey:@"weixin"];
+    [share initImage:image];
+
+    share.delegate = self;
+    [self presentPopupViewController:share animationType:MJPopupViewAnimationSlideLeftLeft];
+    //    [self sendPhoto];
+}
+
+-(void)dismisModelViewController{
+    [self dismissPopupViewControllerWithanimationType:MJPopupViewAnimationSlideLeftLeft];
+}
+
+- (UIImage*)screenshot
+{
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
+    imageSize.height = imageSize.height-20;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Iterate over every window from back to front
+    for (UIWindow *window in [[UIApplication sharedApplication] windows])
+    {
+        if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen])
+        {
+            // -renderInContext: renders in the coordinate space of the layer,
+            // so we must first apply the layer's geometry to the graphics context
+            CGContextSaveGState(context);
+            // Center the context around the window's anchor point
+            //            CGContextTranslateCTM(context, [window center].x, [window center].y);
+            CGContextTranslateCTM(context, [window center].x, [window center].y - 20);
+            // Apply the window's transform about the anchor point
+            CGContextConcatCTM(context, [window transform]);
+            // Offset by the portion of the bounds left of and above the anchor point
+            CGContextTranslateCTM(context,
+                                  -[window bounds].size.width * [[window layer] anchorPoint].x,
+                                  -[window bounds].size.height * [[window layer] anchorPoint].y);
+            
+            // Render the layer hierarchy to the current context
+            [[window layer] renderInContext:context];
+            
+            // Restore the context
+            CGContextRestoreGState(context);
+        }
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (void)didReceiveMemoryWarning

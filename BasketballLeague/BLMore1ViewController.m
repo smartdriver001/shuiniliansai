@@ -56,7 +56,7 @@
     }
     
     dataSource = [NSMutableArray array];
-    dataSource = @[@"消息",@"联盟说明",@"关于我们",@"意见反馈",@"评价该软件",@"检查更新"];
+    dataSource = @[@"消息",@"关于我们",@"意见反馈",@"评价该软件",@"检查更新"];
     images = @[@"message",@"lmsm",@"aboutUs",@"yjfk",@"comment",@"gengxin"];
     int y = 0;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -66,7 +66,7 @@
     
     for (int i=0; i<dataSource.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        if (i==2) {
+        if (i==1) {
             y = y+11;
         }
         button.frame = CGRectMake(20, 20+y+(i*44+i*2), 280, 44);
@@ -131,31 +131,32 @@
     
     UIViewController *viewController;
     
-    if (button.tag == 1 ) {
-        
-        viewController = [[BLLmsmViewController alloc]initWithNibName:nil bundle:nil];
-        viewController.title = [dataSource objectAtIndex:button.tag];
-        
-    }else if (button.tag == 0){
+//    if (button.tag == 1 ) {
+//        
+//        viewController = [[BLLmsmViewController alloc]initWithNibName:nil bundle:nil];
+//        viewController.title = [dataSource objectAtIndex:button.tag];
+//        
+//    }else
+        if (button.tag == 0){
         
 //        viewController = [[BLMessageViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController = [[BLMyMessageViewController alloc]initWithNibName:nil bundle:nil];
         
-    }else if (button.tag == 2){
+    }else if (button.tag == 1){
         
         viewController = [[BLAboutUsViewController alloc] initWithNibName:@"BLAboutUsViewController" bundle:nil];
         
-    }else if (button.tag == 3){
+    }else if (button.tag == 2){
         
         viewController = [[BLFeedbackViewController alloc] initWithNibName:@"BLFeedbackViewController" bundle:nil];
         
-    }else if (button.tag == 4){
+    }else if (button.tag == 3){
         
         NSString *evaluateString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",appstoreID];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:evaluateString]];
         return;
     
-    }else if (button.tag == 5){
+    }else if (button.tag == 4){
 //        [ShowLoading showErrorMessage:@"开发中..." view:self.view];
 //        return;
         

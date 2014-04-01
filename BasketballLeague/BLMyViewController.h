@@ -39,6 +39,8 @@
     
     UIView *loginView;
     
+    UIView *resetPwdView;
+    
 }
 
 -(void)setVisitid:(NSString *)visitid andName:(NSString *)name from:(NSString *)from;

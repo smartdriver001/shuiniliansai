@@ -113,7 +113,7 @@
         if(indexPath.row == 0){
             cell.imageView.image = [UIImage imageNamed:@"searchQY@2x"];
         }else{
-            cell.imageView.image = [UIImage imageNamed:@"searchQD"];
+            cell.imageView.image = [UIImage imageNamed:@"searchQD@2x"];
         }
         cell.textLabel.font = [UIFont boldSystemFontOfSize:16.0f];
         cell.textLabel.textColor = [UIColor whiteColor];

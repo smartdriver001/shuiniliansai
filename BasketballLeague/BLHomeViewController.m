@@ -77,28 +77,33 @@
     float y;
     if (ios7) {
         if (iPhone5) {
-            y = 568 - 320 - 49;
+            y = 568 - 224 - 49;
         }else{
-            y = 480 - 320 - 49;
+            y = 480 - 224 - 49;
         }
     }else{
         if (iPhone5) {
-            y = 548 - 320 - 49;
+            y = 568 - 224 - 49;
         }else{
-            y = 460 - 320 - 49;
+            y = 480 - 224 - 49;
         }
     }
     
-    high = (y-199)/2;
-    
-    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, high, 320, 199)];
+    high = y;
+    int temp ;
+    if (ios7) {
+        temp = 64;
+    }else{
+        temp = 44;
+    }
+    UIImageView * imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, temp, 320, 160)];
 //    imageView.backgroundColor = [UIColor lightGrayColor];
     imageView.image = [UIImage imageNamed:@"home_log"];
     [self.view addSubview:imageView];
     
     //全国赛程
     UIButton * scheduleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    scheduleButton.frame = CGRectMake(0, y, 160, 160);
+    scheduleButton.frame = CGRectMake(0, 160+temp, 160, high/2);
     [scheduleButton addTarget:self action:@selector(schedulelistButtonClick) forControlEvents:UIControlEventTouchUpInside];
     scheduleButton.layer.borderWidth = 0.6;
     scheduleButton.layer.borderColor = [[UIColor blackColor] CGColor];
@@ -106,23 +111,23 @@
     [scheduleButton setBackgroundImage:[UIImage imageNamed:@"purple"] forState:UIControlStateNormal];
 //    [scheduleButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:scheduleButton];
-    
-    UIImageView * scheduleImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (160-50)/2-20, 50, 50)];
+//
+    UIImageView * scheduleImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
     scheduleImage.image = [UIImage imageNamed:@"quanguosaicheng"];
     [scheduleButton addSubview:scheduleImage];
-    
-    UILabel * scheduleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 95-20, 160, 50)];
+//
+    UILabel * scheduleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
     scheduleLabel.text = @"赛程战况";
     scheduleLabel.textAlignment = UITextAlignmentCenter;
     scheduleLabel.textColor = [UIColor whiteColor];
     scheduleLabel.font = [UIFont boldSystemFontOfSize:17];
     scheduleLabel.backgroundColor = [UIColor clearColor];
     [scheduleButton addSubview:scheduleLabel];
-    
-    
+//
+//    
     //全国球队
     UIButton * teamslistButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    teamslistButton.frame = CGRectMake(160, y, 160, 160);
+    teamslistButton.frame = CGRectMake(160, 160+temp, 160, high/2);
     [teamslistButton addTarget:self action:@selector(teamslistButtonClick) forControlEvents:UIControlEventTouchUpInside];
     teamslistButton.layer.borderWidth = 0.6;
     teamslistButton.layer.borderColor = [[UIColor blackColor] CGColor];
@@ -131,11 +136,11 @@
 //    [teamslistButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:teamslistButton];
     
-    UIImageView * teamslistImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (160-50)/2-20, 50, 50)];
+    UIImageView * teamslistImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
     teamslistImage.image = [UIImage imageNamed:@"quanguoqiudui"];
     [teamslistButton addSubview:teamslistImage];
     
-    UILabel * teamslistLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 95-20, 160, 50)];
+    UILabel * teamslistLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
     teamslistLabel.text = @"参赛球队";
     teamslistLabel.textAlignment = UITextAlignmentCenter;
     teamslistLabel.textColor = [UIColor whiteColor];
@@ -146,7 +151,7 @@
     
     //排行榜
     UIButton * listButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    listButton.frame = CGRectMake(0, y + 160, 160, 160);
+    listButton.frame = CGRectMake(0, 160+temp+high/2, 160, high/2);
     [listButton addTarget:self action:@selector(listButtonClick) forControlEvents:UIControlEventTouchUpInside];
     listButton.layer.borderWidth = 0.6;
     listButton.layer.borderColor = [[UIColor blackColor] CGColor];
@@ -155,11 +160,11 @@
 //    [listButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:listButton];
     
-    UIImageView * listImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (160-50)/2-20, 50, 50)];
+    UIImageView * listImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
     listImage.image = [UIImage imageNamed:@"paihangbang"];
     [listButton addSubview:listImage];
     
-    UILabel * listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 95-20, 160, 50)];
+    UILabel * listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
     listLabel.text = @"排行榜";
     listLabel.textAlignment = UITextAlignmentCenter;
     listLabel.textColor = [UIColor whiteColor];
@@ -170,7 +175,7 @@
     
     //比赛报名
     UIButton * entryButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    entryButton.frame = CGRectMake(160, y + 160, 160, 160);
+    entryButton.frame = CGRectMake(160, 160+temp+high/2, 160, high/2);
     [entryButton addTarget:self action:@selector(entryButtonClick) forControlEvents:UIControlEventTouchUpInside];
     entryButton.layer.borderWidth = 0.6;
     entryButton.layer.borderColor = [[UIColor blackColor] CGColor];
@@ -179,18 +184,18 @@
 //    [entryButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:entryButton];
     
-    UIImageView * entryImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (160-50)/2-20, 50, 50)];
+    UIImageView * entryImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
     entryImage.image = [UIImage imageNamed:@"sousuo"];
     [entryButton addSubview:entryImage];
     
-    UILabel * entryLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 95-20, 160, 50)];
+    UILabel * entryLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
     entryLabel.text = @"搜索";
     entryLabel.textAlignment = UITextAlignmentCenter;
     entryLabel.textColor = [UIColor whiteColor];
     entryLabel.font = [UIFont boldSystemFontOfSize:17];
     entryLabel.backgroundColor = [UIColor clearColor];
     [entryButton addSubview:entryLabel];
-    
+//
     clManager = [[CLLocationManager alloc]init];
     clManager.delegate = self;
     clManager.distanceFilter = 1000;
