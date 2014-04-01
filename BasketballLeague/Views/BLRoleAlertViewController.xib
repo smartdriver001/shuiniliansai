@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+    <dependencies>
+        <deployment defaultVersion="1280" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BLRoleAlertViewController">
+            <connections>
+                <outlet property="cancel" destination="lYy-nA-xux" id="kyG-Re-r8A"/>
+                <outlet property="commit" destination="7OT-tv-YuG" id="ALp-wv-RqL"/>
+                <outlet property="houweiBtn" destination="Qks-Uu-NLd" id="JVw-tS-Fe8"/>
+                <outlet property="qianfengBtn" destination="cRd-OY-1yj" id="s3R-Yr-1SK"/>
+                <outlet property="tibuBtn" destination="Jk5-Yb-Kly" id="0xM-mD-3Vx"/>
+                <outlet property="titleBtn" destination="fr3-lX-5SQ" id="8Xw-Qf-TCk"/>
+                <outlet property="view" destination="1" id="3"/>
+                <outlet property="zhongfengBtn" destination="fU6-Yc-j5y" id="4Cd-Zw-Ou0"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="281" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="7OT-tv-YuG">
+                    <rect key="frame" x="20" y="132" width="100" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="didClickAction:" destination="-1" eventType="touchUpInside" id="mt7-qh-gKk"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lYy-nA-xux">
+                    <rect key="frame" x="158" y="132" width="100" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="didClickAction:" destination="-1" eventType="touchUpInside" id="voU-M9-H0b"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fr3-lX-5SQ">
+                    <rect key="frame" x="0.0" y="0.0" width="281" height="46"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="申请加入">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cRd-OY-1yj">
+                    <rect key="frame" x="11" y="68" width="60" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="前锋"/>
+                    <connections>
+                        <action selector="selectRoleAction:" destination="-1" eventType="touchUpInside" id="QW0-Bv-V8k"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fU6-Yc-j5y">
+                    <rect key="frame" x="78" y="68" width="60" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="中锋"/>
+                    <connections>
+                        <action selector="selectRoleAction:" destination="-1" eventType="touchUpInside" id="Xgd-En-feF"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qks-Uu-NLd">
+                    <rect key="frame" x="145" y="68" width="60" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="后卫"/>
+                    <connections>
+                        <action selector="selectRoleAction:" destination="-1" eventType="touchUpInside" id="dWv-fK-HgK"/>
+                    </connections>
+                </button>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Jk5-Yb-Kly">
+                    <rect key="frame" x="213" y="68" width="60" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="替补"/>
+                    <connections>
+                        <action selector="selectRoleAction:" destination="-1" eventType="touchUpInside" id="eFD-Co-hTw"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+        </view>
+    </objects>
+</document>
