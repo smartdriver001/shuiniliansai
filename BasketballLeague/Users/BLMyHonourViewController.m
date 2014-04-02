@@ -94,7 +94,7 @@
         if ([home isEqualToString:@""]) {
             [self addLeftNavItem:@selector(dismiss)];
 //            [self addRightNavItemWithImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
-            [self addNavRightText:@"刷选" action:@selector(filterData)];
+            [self addNavRightText:@"筛选" action:@selector(filterData)];
             [self addNavText:@"我的荣耀" action:nil];
             commit = [UIButton buttonWithType:UIButtonTypeCustom];
             commit.frame = CGRectMake(18, navHigh + 350, 280, 44);
@@ -114,13 +114,13 @@
             [self addLeftNavBarItem:@selector(dismiss)];
 //            [self addRightNavBarItemImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
             
-            [self addRightNavBarItem:@"刷选" action:@selector(filterData)];
+            [self addRightNavBarItem:@"筛选" action:@selector(filterData)];
         }
         
     }else{
         [self addLeftNavItem:@selector(dismiss)];
 //        [self addRightNavItemWithImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
-        [self addNavRightText:@"刷选" action:@selector(filterData)];
+        [self addNavRightText:@"筛选" action:@selector(filterData)];
         [self addNavText:@"我的荣耀" action:nil];
         
         commit = [UIButton buttonWithType:UIButtonTypeCustom];

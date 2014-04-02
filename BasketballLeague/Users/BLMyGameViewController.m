@@ -82,7 +82,7 @@
 
 -(void)initRightButton{
     
-    [self addRightNavBarItem:@"刷选" action:@selector(rightButtonClick)];
+    [self addRightNavBarItem:@"筛选" action:@selector(rightButtonClick)];
 //    [self addRightNavItemWithImg:@"Filter_normal" hImg:@"Filter_selected" action:@selector(rightButtonClick)];
     
 }

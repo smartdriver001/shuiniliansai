@@ -74,6 +74,7 @@
     if ([_tag isEqualToString:@"height"]) {
         textField.placeholder = @"请填写您的身高";
         tagLabel.text = @"(CM)";
+        textField.keyboardType = UIKeyboardTypePhonePad;
     }else if([_tag isEqualToString:@"weight"]){
         textField.placeholder = @"请填写您的体重";
         tagLabel.text = @"(KG)";

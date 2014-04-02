@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BLRegViewController">
             <connections>
-                <outlet property="agreementButton" destination="zse-uB-vsl" id="o6c-Ta-aEC"/>
                 <outlet property="selectedButton" destination="79C-jo-6gL" id="7nI-ce-89n"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -39,18 +38,6 @@
                     <state key="selected" image="check_press.png"/>
                     <connections>
                         <action selector="getVcode:" destination="-1" eventType="touchUpInside" id="CWG-lq-3gs"/>
-                    </connections>
-                </button>
-                <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="zse-uB-vsl">
-                    <rect key="frame" x="39" y="120" width="182" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="我已阅读并同意用户使用协议">
-                        <color key="titleColor" red="0.1977382489" green="0.39050703980000001" blue="0.98511240430000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="protocolAction:" destination="-1" eventType="touchUpInside" id="qRQ-xi-hYl"/>
                     </connections>
                 </button>
             </subviews>

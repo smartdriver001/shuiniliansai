@@ -63,6 +63,15 @@
     
     NSData *data = [[BLUtils globalCache]dataForKey:@"schools"];
     schools = [BLSchool parseJsonToArray:data];
+    
+    shoes = @"";
+    ballnumber = @"";
+    size = @"";
+    school = @"";
+    college = @"";
+    height = @"";
+    weight = 0;
+    
 }
 
 -(void)initBackground {
@@ -161,6 +170,8 @@
 }
 
 -(void)additions:(UIButton *)button{
+    
+    [userNameField resignFirstResponder];
     
     BLEditSecondViewController *second = [[BLEditSecondViewController alloc]initWithNibName:@"BLEditSecondViewController" bundle:nil];
     second.isCommit = @"";
@@ -333,7 +344,7 @@
     }
 }
 
-/*参数	类型	必选	默认值	说明	示例
+/*
  uid	int	true		注册用户主键索引
  realname	varchar	true		真实姓名
  sex	varchar	false		性别	男
@@ -392,10 +403,11 @@
                 
                 [[BLUtils appDelegate]setAPTags:personData.uid];//像服务器发送uid
                 
-                [[BLUtils globalCache]setString:personData.uid forKey:@"uid"];
-                [[BLUtils globalCache]setString:personData.token forKey:@"token"];
+//                [[BLUtils globalCache]setString:personData.uid forKey:@"uid"];
+//                [[BLUtils globalCache]setString:personData.token forKey:@"token"];
                 [_delegate initUID:personData];
-                [self dismissModalViewControllerAnimated:YES];
+//                [self dismissModalViewControllerAnimated:YES];
+                [self.navigationController popToRootViewControllerAnimated:YES];
                 
             }else{
                 [ShowLoading showErrorMessage:personData.msg view:self.view];

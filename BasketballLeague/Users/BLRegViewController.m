@@ -15,6 +15,7 @@
 #import "BLTextField.h"
 #import "UIColor+Hex.h"
 #import "BLReg2ViewController.h"
+#import "UnderLineLabel.h"
 
 @interface BLRegViewController ()<UITextFieldDelegate>{
     UITextField *phoneField;
@@ -89,7 +90,20 @@
     [self.view addSubview:commitButton];
     
     [_agreementButton setTitleColor:[UIColor colorWithHexString:@"#fbb03b"] forState:UIControlStateNormal];
-    _agreementButton.selected = YES;
+    _selectedButton.selected = YES;
+    
+    UnderLineLabel *label = [[UnderLineLabel alloc] initWithFrame:CGRectMake(39 ,120, 182, 17)];
+    [label setBackgroundColor:[UIColor clearColor]];
+    label.font = [UIFont systemFontOfSize:14.0f];
+    // [label setBackgroundColor:[UIColor yellowColor]];
+    [label setTextColor:[UIColor yellowColor]];
+    [label setBackgroundColor:[UIColor clearColor]];
+    label.highlightedColor = [UIColor grayColor];
+    label.shouldUnderline = YES;
+    
+    [label setText:@"我已阅读并同意用户使用协议" andCenter:CGPointMake(136, 126)];
+    [label addTarget:self action:@selector(protocolAction)];
+    [self.view addSubview:label];
     
 }
 
@@ -140,10 +154,10 @@
 //        
 //        [self.navigationController pushViewController:reg1 animated:YES];
         
-        if (!_agreementButton.selected) {
-            [ShowLoading showErrorMessage:@"您还为勾选用户使用协议！" view:self.view];
-            return;
-        }
+//        if (!_agreementButton.selected) {
+//            [ShowLoading showErrorMessage:@"您还为勾选用户使用协议！" view:self.view];
+//            return;
+//        }
         
         [self requestWithData:phoneField.text password:passwordField.text];
         
@@ -151,7 +165,7 @@
 }
 
 -(void)requestWithData:(NSString *)string password:(NSString *)password{
-    NSString *path = [NSString stringWithFormat:@"signup/?username=%@&passwd=%@",string,password];
+    NSString *path = [NSString stringWithFormat:@"signup/?username=%@&passwd=%@&status=1",string,password];
     
     path = [BLUtils encode:path];
     
@@ -178,6 +192,8 @@
 //        reg1.isNext = _isNext;
 //        reg1.telPhone = phoneField.text;
 //        [self.navigationController pushViewController:reg1 animated:YES];
+        [[BLUtils globalCache]setString:baseObject.data.uid forKey:@"uid"];
+        [[BLUtils appDelegate]setAPTags:baseObject.data.uid];//像服务器发送uid
         BLReg2ViewController *reg1 = [[BLReg2ViewController alloc]initWithNibName:@"BLReg2ViewController" bundle:nil];
         reg1.data = baseObject.data;
         reg1.title = @"注册";
@@ -205,7 +221,7 @@
     [phoneField resignFirstResponder];
     [passwordField resignFirstResponder];
 }
-- (IBAction)protocolAction:(id)sender {
+- (void)protocolAction{
     BLLeagueSubViewController *subView = [[BLLeagueSubViewController alloc]initWithNibName:@"BLLeagueSubViewController" bundle:nil];
     subView.title = @"用户使用协议";
     [self.navigationController pushViewController:subView animated:YES];

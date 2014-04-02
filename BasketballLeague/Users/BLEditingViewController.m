@@ -128,9 +128,9 @@
         }else if (i == 1){
             additionLabel.text = [NSString stringWithFormat:@"%@",[_personData objectAtIndex:i]];
         }else if (i == 2){
-            additionLabel.text = [NSString stringWithFormat:@"%@m",[_personData objectAtIndex:i]];
+            additionLabel.text = [NSString stringWithFormat:@"%.0fCM",[[_personData objectAtIndex:i]floatValue]*100];
         }else if (i == 3){
-            additionLabel.text = [NSString stringWithFormat:@"%@kg",[_personData objectAtIndex:i]];
+            additionLabel.text = [NSString stringWithFormat:@"%@KG",[_personData objectAtIndex:i]];
         }else if (i == 4){
             additionLabel.text = [NSString stringWithFormat:@"%@号",[_personData objectAtIndex:i]];
         }else if (i == 5){

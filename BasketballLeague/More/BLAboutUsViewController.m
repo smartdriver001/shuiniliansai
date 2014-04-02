@@ -76,21 +76,21 @@
     [calButton addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:calButton];
     
-    UILabel *telLabel = [[UILabel alloc]initWithFrame:CGRectMake(35, 250, 200, 32)];
+    UILabel *telLabel = [[UILabel alloc]initWithFrame:CGRectMake(25, 250, 200, 32)];
     telLabel.backgroundColor = [UIColor clearColor];
     telLabel.textColor = [UIColor grayColor];
     telLabel.font = [UIFont systemFontOfSize:14.0f];
     telLabel.text = @"客服电话按当地市话费标准计费";
     [self.view addSubview:telLabel];
 
-    UILabel *weixinLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(35, 320, 200, 32)];
+    UILabel *weixinLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(25, 320, 200, 32)];
     weixinLabel1.backgroundColor = [UIColor clearColor];
     weixinLabel1.textColor = [UIColor grayColor];
     weixinLabel1.font = [UIFont systemFontOfSize:14.0f];
     weixinLabel1.text = @"我们的微信账号：";
     [self.view addSubview:weixinLabel1];
     
-    weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(142, 320, 200, 32)];
+    weixinLabel = [[UILabel alloc]initWithFrame:CGRectMake(142-10, 320, 200, 32)];
     weixinLabel.backgroundColor = [UIColor clearColor];
     weixinLabel.textColor = [UIColor colorWithHexString:@"#ff5839"];
     weixinLabel.font = [UIFont systemFontOfSize:14.0f];
@@ -98,13 +98,13 @@
     [self.view addSubview:weixinLabel];
     
     
-    UILabel *sinaLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(35, 340, 200, 32)];
+    UILabel *sinaLabel1 = [[UILabel alloc]initWithFrame:CGRectMake(25, 340, 200, 32)];
     sinaLabel1.backgroundColor = [UIColor clearColor];
     sinaLabel1.textColor = [UIColor grayColor];
     sinaLabel1.font = [UIFont systemFontOfSize:14.0f];
     sinaLabel1.text = @"我们的新浪账号：";
     [self.view addSubview:sinaLabel1];
-    sinaLabel = [[UILabel alloc]initWithFrame:CGRectMake(142, 340, 200, 32)];
+    sinaLabel = [[UILabel alloc]initWithFrame:CGRectMake(142-10, 340, 200, 32)];
     sinaLabel.backgroundColor = [UIColor clearColor];
     sinaLabel.textColor = [UIColor colorWithHexString:@"#ff5839"];
     sinaLabel.font = [UIFont systemFontOfSize:14.0f];

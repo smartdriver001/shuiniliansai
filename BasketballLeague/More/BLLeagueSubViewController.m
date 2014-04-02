@@ -50,30 +50,38 @@
     //        dataSource = @[@"奖励制度",@"升级方式"];
     if ([self.title isEqualToString:@"奖励制度"]) {
         path = @"other/prize/";
+        NSURLRequest *reuqest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",base_url1,path]]];
+        [_webView loadRequest:reuqest];
+        
     }else if([self.title isEqualToString:@"用户使用协议"]){
         path = @"agreement/";
-    }{
+        
+        [ShowLoading showWithMessage:showloading view:self.view];
+        [BLBaseObject globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
+            [ShowLoading hideLoading:self.view];
+            if (error) {
+                return ;
+            }
+            if (posts.count > 0) {
+                BLBaseObject *base = [posts objectAtIndex:0];
+                if ([base.msg isEqualToString:@"succ"]) {
+                    if ([base.docs isEqualToString:@""]) {
+                       [_webView loadHTMLString:@"暂无协议内容！" baseURL:nil];
+                    }else{
+                        [_webView loadHTMLString:base.docs baseURL:nil];
+                    }
+                }else{
+                    [ShowLoading showErrorMessage:base.msg view:self.view];
+                }
+            }
+        } path:path];
+    }else{
         path = @"other/update/";
+        NSURLRequest *reuqest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",base_url1,path]]];
+        [_webView loadRequest:reuqest];
+        
     }
     
-    NSURLRequest *reuqest = [NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",base_url1,path]]];
-    [_webView loadRequest:reuqest];
-    
-//    [ShowLoading showWithMessage:showloading view:self.view];
-//    [BLBaseObject globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
-//        [ShowLoading hideLoading:self.view];
-//        if (error) {
-//            return ;
-//        }
-//        if (posts.count > 0) {
-//            BLBaseObject *base = [posts objectAtIndex:0];
-//            if ([base.msg isEqualToString:@"succ"]) {
-//                [_webView loadHTMLString:base.data.text baseURL:nil];
-//            }else{
-//                [ShowLoading showErrorMessage:base.msg view:self.view];
-//            }
-//        }
-//    } path:path];
 }
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     return YES;
