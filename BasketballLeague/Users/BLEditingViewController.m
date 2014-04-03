@@ -220,7 +220,11 @@
 }
 
 - (IBAction)setDatePick:(id)sender {
-    self.selectedDate = [NSDate date];
+    NSString *dateString = [NSString stringWithFormat:@"%@",[_personData objectAtIndex:1]];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat: @"yyyy-MM-dd"];
+    NSDate *destDate= [dateFormatter dateFromString:dateString];
+    self.selectedDate = destDate;  //[NSDate date];
     _actionSheetPicker = [[ActionSheetDatePicker alloc] initWithTitle:@"" datePickerMode:UIDatePickerModeDate selectedDate:self.selectedDate target:self action:@selector(dateWasSelected:element:) origin:sender];
     self.actionSheetPicker.title = @"生日选择";
     

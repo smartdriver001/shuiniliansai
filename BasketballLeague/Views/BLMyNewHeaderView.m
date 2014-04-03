@@ -174,6 +174,9 @@
     NSString *yuantou = person.yuantou;
     NSString *qiangduan = person.qiangduan;
     NSString *fenggai = person.gaimao;
+    if (defen == nil) {
+        return;
+    }
     NSArray *countsArray = @[defen,lanban,zhugong,yuantou,qiangduan,fenggai];
     
     for (int i=0; i<countsArray.count; i++) {
@@ -191,7 +194,14 @@
     }
     
 //    _idLabel.text = [NSString stringWithFormat:@"ID：%@",person.uid];
-    descLabel.text = [NSString stringWithFormat:@"%@  %@号  %@",person.teamName,person.ballnumber,person.role];
+    NSMutableString *string = [NSMutableString string];
+    if ([person.ballnumber intValue] != 0 || ![person.ballnumber isEqualToString:@""]) {
+        [string appendFormat:@"%@号 ",person.ballnumber];
+    }
+    if (person.role.length > 0) {
+        [string appendFormat:@"%@",person.role];
+    }
+    descLabel.text = [NSString stringWithFormat:@"%@  %@",person.teamName,string];
     nameLabel.text = person.name;
     //@"男 30岁 113kg/20.3m";
     NSString *sex;
@@ -200,7 +210,21 @@
     }else{
         sex = @"女";
     }
-    bodyLabel.text = [NSString stringWithFormat:@"%@ %@岁 %@kg/%.0fcm",sex,person.ageS,person.weightS,[person.heightS floatValue]*100];
+    
+    NSMutableString *body = [NSMutableString string];
+    
+    if ([person.ageS intValue] != 0) {
+        [body appendFormat:@"%@岁 ",person.ageS];
+    }
+    
+    if ([person.weightS intValue] != 0) {
+        [body appendFormat:@"%@kg/",person.weightS];
+    }
+    if ([person.heightS intValue] != 0) {
+        [body appendFormat:@"%.0fcm",[person.heightS floatValue]*100];
+    }
+    
+    bodyLabel.text = [NSString stringWithFormat:@"%@ %@",sex,body];
     
     [_loadPersonIcon setImageWithURL:[NSURL URLWithString:person.icon] placeholderImage:[UIImage imageNamed:@"myicon"]];
     

@@ -317,7 +317,9 @@ typedef enum {
 //        }
 //    }
     
-    NSString *path = [NSString stringWithFormat:@"paihangbang/?type=%@&size=%d&page=%d&schoolId=%@&datetype=%@",typeStr,100,pageIndex,schoolId,order];
+    NSString *cityId = [[BLUtils globalCache]stringForKey:@"cityId"];
+    
+    NSString *path = [NSString stringWithFormat:@"paihangbang/?type=%@&size=%d&page=%d&schoolId=%@&datetype=%@&cityid=%@",typeStr,100,pageIndex,schoolId,order,cityId];
     
 //    [ShowLoading showWithMessage:showloading view:self.view];
     
@@ -338,6 +340,9 @@ typedef enum {
                     [teamListArray removeAllObjects];
                     [teamListArray addObjectsFromArray:base.data.listsArray];
                     [self doneReLoadingTableViewData];
+                    if (base.data.listsArray.count < 1) {
+                        [ShowLoading showErrorMessage:@"暂无数据！" view:self.view];
+                    }
                 }else{
                     [teamListArray addObjectsFromArray:base.data.listsArray];
                     [self doneLoadingTableViewData];

@@ -69,7 +69,7 @@
     titleLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:titleLabel];
     
-    mySwipeView = [[SwipeView alloc]initWithFrame:CGRectMake(75, 66, 148, 146)];
+    mySwipeView = [[SwipeView alloc]initWithFrame:CGRectMake((300-114)/2, 66, 114, 160)];
     mySwipeView.backgroundColor = [UIColor clearColor];
     mySwipeView.delegate = self;
     mySwipeView.dataSource = self;
@@ -232,6 +232,7 @@
     }
     [WXApi sendReq:req];
 
+    [self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0];
 }
 
 -(void)share:(UIButton *)button{

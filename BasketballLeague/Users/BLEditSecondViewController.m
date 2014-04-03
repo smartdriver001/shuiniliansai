@@ -141,7 +141,7 @@
             
             if ([base.msg isEqualToString:@"succ"]) {
                 [ShowLoading showSuccView:self.view message:@"提交成功！"];
-                
+                [[BLUtils globalCache]setString:@"yes" forKey:@"reload"];
                 [self performSelector:@selector(dimiss) withObject:nil afterDelay:1.5f];
             }else{
                 [ShowLoading showErrorMessage:base.msg view:self.view];

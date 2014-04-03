@@ -76,6 +76,7 @@
     passwordField.textColor = [UIColor grayColor];
     [passwordField setReturnKeyType:UIReturnKeyDone];
 //    passwordField.keyboardType = UIKeyboardTypePhonePad;
+    passwordField.secureTextEntry = YES;
     passwordField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     passwordField.placeholder = @"设置密码（6-20位数字加字母）";
     passwordField.delegate = self;
@@ -141,10 +142,10 @@
 //            return;
 //        }
         
-        if (phoneField.text.length < 4 || phoneField.text.length > 16) {
+        if ([BLUtils length:phoneField.text] < 4 || [BLUtils length:phoneField.text] > 16) {
             [ShowLoading showErrorMessage:@"请输入4-16个字符！" view:self.view];
             return;
-        }else if (passwordField.text.length < 6 || passwordField.text.length > 20){
+        }else if ([BLUtils length:passwordField.text] < 6 || [BLUtils length:passwordField.text] > 20){
             [ShowLoading showErrorMessage:@"请输入6-20位数字加字母！" view:self.view];
             return;
         }

@@ -366,7 +366,7 @@
             }
             navHigh = 0;
             
-            [self addLeftNavItemAndTextImg:@"" Text:@"取消" :@selector(leftButtonClick)];
+            [self addLeftNavItemAndTextImg:@"" Text:@"返回" :@selector(leftButtonClick)];
             self.title = @"资料修改";
 //            [self addNavText:@"资料修改" action:nil];
         }else{
@@ -394,7 +394,7 @@
         }
         navHigh = 0;
         
-        [self addLeftNavItemAndTextImg:@"" Text:@"取消" :@selector(leftButtonClick)];
+        [self addLeftNavItemAndTextImg:@"" Text:@"返回" :@selector(leftButtonClick)];
         self.title = @"资料修改";
         
 //        [self addNavText:@"资料修改" action:nil];

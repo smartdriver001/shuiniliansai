@@ -106,4 +106,23 @@
     return [source stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
++(int)length:(NSString *)string{
+    
+    int userLength = 0;
+    
+    for (int i=0; i<string.length; ++i)
+    {
+        NSRange range = NSMakeRange(i, 1);
+        NSString *subString = [string substringWithRange:range];
+        const char *cString = [subString UTF8String];
+        if (strlen(cString) == 3)
+        {
+            userLength += 2;
+        }else{
+            userLength += 1;
+        }
+    }
+    return userLength;
+}
+
 @end

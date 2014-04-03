@@ -10,6 +10,13 @@
 #import "YFJLeftSwipeDeleteTableView.h"
 #import "BLMessageCell.h"
 #import "BLMessage.h"
+#import "UIColor+Hex.h"
+
+typedef enum {
+    EGOHeaderView = 0,
+    EGOBottomView
+} EGORefreshView;
+
 
 @interface BLMyMessageViewController ()<JoinTeamDelegate>{
     NSMutableArray *_dataArray;
@@ -39,19 +46,6 @@
     
 //    _dataArray = [@[@(1), @(2), @(3), @(4), @(5), @(6), @(7), @(8), @(9), @(10)] mutableCopy];
     
-    self.tableView = [[YFJLeftSwipeDeleteTableView alloc] init];
-    self.tableView.backgroundColor = [UIColor clearColor];
-    if (iPhone5) {
-        self.tableView.frame = CGRectMake(0, 0, 320, 568);
-    }else{
-        self.tableView.frame = CGRectMake(0, 0, 320, 460);
-    }
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerClass:[BLMessageCell class] forCellReuseIdentifier:@"Cell"];
-    [self.view addSubview:self.tableView];
-
 }
 
 -(void)requestData{
@@ -70,9 +64,12 @@
             BLMessage *message = [posts objectAtIndex:0];
             if (message.msg == nil) {
                 _dataArray = [NSMutableArray arrayWithArray:posts];
-                [self.tableView reloadData];
+//                [self.tableView reloadData];
+                [self doneReLoadingTableViewData];
             }else{
                 [ShowLoading showErrorMessage:@"暂无收到消息" view:self.view];
+                _dataArray = [NSMutableArray array];
+                [self doneReLoadingTableViewData];
             }
         }
     } path:path];
@@ -80,8 +77,37 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self requestData];
+//    [self requestData];
     [[BLUtils globalCache]setString:@"" forKey:@"push"];
+    
+    
+    self.tableView = [[YFJLeftSwipeDeleteTableView alloc] init];
+    self.tableView.backgroundColor = [UIColor clearColor];
+    if (iPhone5) {
+        self.tableView.frame = CGRectMake(0, 0, 320, 568);
+    }else{
+        self.tableView.frame = CGRectMake(0, 0, 320, 460);
+    }
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[BLMessageCell class] forCellReuseIdentifier:@"Cell"];
+    [self.view addSubview:self.tableView];
+    
+    
+    if (_refreshHeaderView == nil) {
+		
+		EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame: CGRectMake(0.0f, - _tableView.bounds.size.height, _tableView.frame.size.width, _tableView.bounds.size.height)];
+        view.backgroundColor = [UIColor colorWithHexString:@"#383b44"];
+		view.delegate = self;
+        view.tag = EGOHeaderView;
+		[_tableView addSubview:view];
+		_refreshHeaderView = view;
+		
+	}
+	[_refreshHeaderView refreshLastUpdatedDate];
+//    [_tableView reloadData];
+    [self requestData];
 }
 
 -(void)dismiss{
@@ -215,7 +241,6 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSString *str = @"证书是密钥对的非秘密的部分。将它发送给其它人是安全的，比如通过SSL通讯的过程中就会包含证书。然而，对于私钥，当然是私有的。它是秘密的。你的私钥只对你有用，对其他人没用。要重视的是：如果你没有私钥的话，就无法使用证书。";
     
     BLMessage *myMSG = [_dataArray objectAtIndex:indexPath.row];
     size = [myMSG.message sizeWithFont:[UIFont systemFontOfSize:14.0f] constrainedToSize:CGSizeMake(320-36, 2000) lineBreakMode:NSLineBreakByCharWrapping];
@@ -237,6 +262,63 @@
  return YES;
  }
  */
+
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+    
+    [self requestData];
+	_reloading = YES;
+	
+}
+
+- (void)doneReLoadingTableViewData
+{
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_tableView];
+    [_tableView reloadData];
+    
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+//    [_refreshTailerView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+//    [_refreshTailerView egoRefreshScrollViewDidEndDragging:scrollView];
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	if (view.tag == EGOHeaderView) {
+        [self reloadTableViewDataSource];
+    } else {
+//        [self loadMoreTableViewDataSource];
+    }
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	return _reloading; // should return if data source model is reloading
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
 
 - (void)didReceiveMemoryWarning
 {

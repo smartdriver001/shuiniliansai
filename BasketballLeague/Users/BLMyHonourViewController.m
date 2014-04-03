@@ -32,6 +32,8 @@
     float navHigh;
     
     BLErrorView *errorView ;
+    
+    NSString *matchId;
 }
 
 @end
@@ -60,31 +62,7 @@
 {
     [super viewDidLoad];
     
-//    NSString * nav = [[BLUtils globalCache]stringForKey:@"per"];
-//    if ([nav isEqualToString:@"homePer"]) {
-//        [self addNavBar];
-//        [self addLeftNavBarItem:@selector(dismiss)];
-//        [self addRightNavBarItemImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
-//        
-//        if (ios7) {
-//            navHigh = 64;
-//        }else{
-//            navHigh = 44;
-//        }
-//
-//        if (iPhone5) {
-//            self.view.frame = CGRectMake(0, navHigh, 320, 548 - 44);
-//        }else{
-//            self.view.frame = CGRectMake(0, navHigh, 320, 460 - 44);
-//        }
-//        
-//    }else{
-//        navHigh = 0;
-//    }
-//    [self addLeftNavItem:@selector(dismiss)];
-//    [self addRightNavItemWithImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
- 
-//    [self requestData:nil];
+    matchId = @"";
     
     
     NSString *home = [[BLUtils globalCache]stringForKey:@"home"];
@@ -93,7 +71,6 @@
     if ([whose isEqualToString:@"TA的"]) {
         if ([home isEqualToString:@""]) {
             [self addLeftNavItem:@selector(dismiss)];
-//            [self addRightNavItemWithImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
             [self addNavRightText:@"筛选" action:@selector(filterData)];
             [self addNavText:@"我的荣耀" action:nil];
             commit = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -112,14 +89,12 @@
             [self addNavBar];
             [self addNavBarTitle:@"TA的荣耀" action:nil];
             [self addLeftNavBarItem:@selector(dismiss)];
-//            [self addRightNavBarItemImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
             
             [self addRightNavBarItem:@"筛选" action:@selector(filterData)];
         }
         
     }else{
         [self addLeftNavItem:@selector(dismiss)];
-//        [self addRightNavItemWithImg:@"Filter_normal@2x" hImg:@"Filter_selected@2x" action:@selector(filterData)];
         [self addNavRightText:@"筛选" action:@selector(filterData)];
         [self addNavText:@"我的荣耀" action:nil];
         
@@ -136,7 +111,7 @@
 -(void)requestData:(NSString *)matchid uid:(NSString *)uid from:(NSString *)from isAll:(BOOL)isAll{
     
     fromString = from;
-    
+    matchId = matchid;
     NSString *path;
     if (matchid && !isAll) {
         path = [NSString stringWithFormat:@"my_glorylist4ios/?uid=%@&matchid=%@",uid,matchid];
@@ -167,6 +142,15 @@
 
 -(void)initViews:(NSArray *)posts{
     
+    for (int i=0; i<30; i++) {
+        [[self.view viewWithTag:200+i]removeFromSuperview];
+        [[self.view viewWithTag:300+i]removeFromSuperview];
+        [[self.view viewWithTag:400+i]removeFromSuperview];
+        [[self.view viewWithTag:500+i]removeFromSuperview];
+        [[self.view viewWithTag:600+i]removeFromSuperview];
+        [[self.view viewWithTag:700+i]removeFromSuperview];
+    }
+    
     UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(60, navHigh + 290, 200, 64)];
     tipsLabel.numberOfLines = 2;
     tipsLabel.backgroundColor = [UIColor clearColor];
@@ -174,7 +158,7 @@
     tipsLabel.font = [UIFont systemFontOfSize:13.0f];
     tipsLabel.text = @"由于您上时间的努力，力压群雄，恭喜您获得以上的成就。";
     tipsLabel.textAlignment = UITextAlignmentCenter;
-    
+    tipsLabel.tag = 620;
     [self.view addSubview:tipsLabel];
     
     UIImage *titleImage = [UIImage imageNamed:@"pkBG"];
@@ -195,12 +179,12 @@
         if (i>=3 && i<=5) {
             titleImageView.frame = CGRectMake(20+8+(60*(i-3)+(i-3)*45), navHigh + 20+200+20, 60, 25);
             fenValueLabel.frame = CGRectMake(20+8+(60*(i-3)+(i-3)*45), navHigh + 20+200+20, 60, 25);
-            imageView.frame = CGRectMake(20+(75*(i-3)+(i-3)*30), navHigh + 20+120+20, 75, 75);
-            button.frame = CGRectMake(20+(75*(i-3)+(i-3)*30), navHigh + 20+120+20, 75, 75);
+            imageView.frame = CGRectMake(30+(160/2*(i-3)+(i-3)*26), navHigh + 20+120+20, 114/2, 160/2);
+            button.frame = CGRectMake(30+(160/2*(i-3)+(i-3)*26), navHigh + 20+120+20, 114/2, 160/2);
             fenLabel.frame = CGRectMake(20+8+(60*(i-3)+(i-3)*45), navHigh + 20+200+20+25, 60, 25);
         }else{
-            button.frame = CGRectMake(20+(75*i+i*30), navHigh + 20, 75, 75);
-            imageView.frame = CGRectMake(20+(75*i+i*30), navHigh + 20, 75, 75);
+            button.frame = CGRectMake(30+(160/2*i+i*25), navHigh + 20, 114/2, 160/2);
+            imageView.frame = CGRectMake(30+(160/2*i+i*25), navHigh + 20, 114/2, 160/2);
             titleImageView.frame = CGRectMake(20+8+(60*i+i*45), navHigh + 20+80, 60, 25);
             fenLabel.frame = CGRectMake(20+8+(60*i+i*45), navHigh + 20+80+25, 60, 25);
             fenValueLabel.frame = CGRectMake(20+8+(60*i+i*45), navHigh + 20+80, 60, 25);
@@ -210,18 +194,23 @@
         fenLabel.text = [NSString stringWithFormat:@"%@",honor.cname];
         fenLabel.textAlignment = UITextAlignmentCenter;
         fenValueLabel.textAlignment = UITextAlignmentCenter;
-        fenValueLabel.tag = i;
         fenValueLabel.text = [NSString stringWithFormat:@"%@",honor.cnt];
         imageView.image = [UIImage imageNamed:honor.ename];
         titleImageView.image = titleImage;
-        button.tag = i;
+        button.tag = 700+i;
         [button addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self.view addSubview:button];
         [self.view addSubview:fenLabel];
         [self.view addSubview:imageView];
         [self.view addSubview:titleImageView];
         [self.view addSubview:fenValueLabel];
         
+        imageView.tag = 200+i;
+        fenLabel.tag = 300+i;
+        titleImageView.tag = 400+i;
+        fenValueLabel.tag = 500+i;
+        fenLabel.tag = 600+i;
     }
 }
 
@@ -254,7 +243,7 @@
     /*1:得分王、2:篮板王、3:助攻王、
      4:盖帽王、5:抢断王、6:远投王*/
     int type ;
-    BLHonor *honor = [myHonors objectAtIndex:btn.tag];
+    BLHonor *honor = [myHonors objectAtIndex:btn.tag-700];
     if ([honor.cname isEqualToString:@"得分王"]) {
         type = 1;
     }else if ([honor.cname isEqualToString:@"篮板王"]){
@@ -268,7 +257,7 @@
     }else{
         type = 6;
     }
-    NSString *path = [NSString stringWithFormat:@"my_singleglory/?uid=%@&honourtype=%d",@"2",type];
+    NSString *path = [NSString stringWithFormat:@"my_singleglory/?uid=%@&honourtype=%d&matchid=%@",myUid,type,matchId];
     [ShowLoading showWithMessage:showloading view:self.view];
     [BLHonor globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
         [ShowLoading hideLoading:self.view];
@@ -490,6 +479,10 @@
 //    }else if (buttonIndex == 1){
 //        [self openPics];
 //    }
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 

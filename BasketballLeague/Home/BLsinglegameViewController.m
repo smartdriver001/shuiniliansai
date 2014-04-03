@@ -239,8 +239,8 @@
     BLSinglegameCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (cell == nil) {
         cell = [[BLSinglegameCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+        cell.backgroundColor = [UIColor clearColor];
     }
-//    cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     if (singleArray.count > 0) {
@@ -263,10 +263,14 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSelector:@selector(push:) withObject:indexPath afterDelay:0.3];
+}
+
+-(void)push:(NSIndexPath *)indexPath{
     
     if (singleArray.count > 0) {
         if (indexPath.section == 0) {
-
+            
             BLData * data = [singleArray objectAtIndex:0];
             BLSingleUser * user = [data.teamA.userArray objectAtIndex:indexPath.row];
             
@@ -281,7 +285,7 @@
             
             BLMyViewController * myView = [[BLMyViewController alloc]init];
             [myView setVisitid:user.uid andName:user.username from:@"全国赛程"];
-//            [myView setVisitid:user.uid andName:user.username];
+            //            [myView setVisitid:user.uid andName:user.username];
             [self.navigationController pushViewController:myView animated:YES];
         }
     }

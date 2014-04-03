@@ -7,8 +7,16 @@
 //
 
 #import "BLBaseViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
+@interface BLMyMessageViewController : BLBaseViewController<UITableViewDataSource,UITableViewDelegate,EGORefreshTableHeaderDelegate> {
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    
+    BOOL _reloading;
+}
 
-@interface BLMyMessageViewController : BLBaseViewController<UITableViewDataSource,UITableViewDelegate>
+- (void)reloadTableViewDataSource;
+
 
 @end

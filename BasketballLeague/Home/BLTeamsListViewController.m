@@ -622,6 +622,10 @@ typedef enum {
                 
                 NSLog(@"%@",base.data.myTeamListArray);
                 
+                if (base.data.myTeamListArray.count < 1) {
+                    [ShowLoading showErrorMessage:@"无搜索结果！" view:self.view];
+                }
+                
                 teamListArray = [NSMutableArray arrayWithArray:base.data.myTeamListArray];
                 
                 [_tableView reloadData];

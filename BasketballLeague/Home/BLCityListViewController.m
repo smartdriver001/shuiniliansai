@@ -22,6 +22,7 @@
     
     NSString * localCity;
     BLCityBase *base;
+    NSArray *cityIds;
 }
 
 @property (nonatomic,strong) NSMutableArray * cityArray;
@@ -83,6 +84,7 @@
     
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     cityArray = [userDefaults objectForKey:@"citylist"];
+    cityIds = [userDefaults objectForKey:@"cityIds"];
     if (cityArray.count > 0) {
         
     }else{
@@ -208,10 +210,17 @@
         [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",@"2"] forKey:@"cityId"];
         [_delegate titleCityName:localCity];
     }else{
-        BLCityLists * city = [base.cityListsArray objectAtIndex:indexPath.row];
-        [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",city.cityId] forKey:@"cityId"];
-        [[BLUtils globalCache]setString:[cityArray objectAtIndex:indexPath.row] forKey:@"location"];
-        [_delegate titleCityName:[cityArray objectAtIndex:indexPath.row]];
+        if (base) {
+            BLCityLists * city = [base.cityListsArray objectAtIndex:indexPath.row];
+            [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",city.cityId] forKey:@"cityId"];
+            [[BLUtils globalCache]setString:[cityArray objectAtIndex:indexPath.row] forKey:@"location"];
+            [_delegate titleCityName:[cityArray objectAtIndex:indexPath.row]];
+        }else{
+            [[BLUtils globalCache]setString:[NSString stringWithFormat:@"%@",[cityIds objectAtIndex:indexPath.row]] forKey:@"cityId"];
+            [[BLUtils globalCache]setString:[cityArray objectAtIndex:indexPath.row] forKey:@"location"];
+            [_delegate titleCityName:[cityArray objectAtIndex:indexPath.row]];
+        }
+        
     }
     
     indexRow[indexPath.section][indexPath.row] = 1;
@@ -243,12 +252,15 @@
                 
 //                cityArray = [NSMutableArray arrayWithArray:base.cityListsArray];
                 self.cityArray = [NSMutableArray array];
+                NSMutableArray *mcityIds = [NSMutableArray array];
                 for (int i = 0; i < base.cityListsArray.count; i++) {
                     BLCityLists * city = [base.cityListsArray objectAtIndex:i];
                     [self.cityArray addObject:city.name];
+                    [mcityIds addObject:city.cityId];
                 }
                 NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:self.cityArray forKey:@"citylist"];
+                [userDefaults setObject:mcityIds forKey:@"cityIds"];
                 [userDefaults synchronize];
                 
                 [_tableView reloadData];

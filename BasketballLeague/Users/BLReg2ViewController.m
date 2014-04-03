@@ -113,7 +113,7 @@
     [scrollView addSubview:tips];
     
     int yplus = 0;
-    for (int i=0; i<9; i++) {
+    for (int i=0; i<7; i++) {
         
         if (i == 5) {
             yplus = 14;
@@ -131,6 +131,7 @@
         titleLabel.text = [titles objectAtIndex:i];
         titleLabel.textColor = [UIColor whiteColor];
         titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
+        
         [scrollView addSubview:titleLabel];
         
         UILabel *bixuanLabel = [[UILabel alloc]initWithFrame:CGRectMake(20+14+35, 90+6+(i*32+i*2+i*12)+yplus, 70, 32)];
@@ -148,10 +149,23 @@
         additionLabel.font = [UIFont systemFontOfSize:16.0f];
         additionLabel.tag = 100+i;
         
+        if (i == 0) {
+            additionLabel.text = @"男";
+            sex = 1;
+        }
+        if (i == 2) {
+            additionLabel.text = @"175CM";
+            height = @"1.75";
+        }
+        if (i == 3) {
+            additionLabel.text = @"65KG";
+            weight = 65;
+        }
         [scrollView addSubview:additionLabel];
     }
+    
     _commitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _commitButton.frame = CGRectMake(20, 100+6+(9*32+9*2+9*12)+yplus, 280, 44);
+    _commitButton.frame = CGRectMake(20, 100+6+(7*32+7*2+7*12)+yplus, 280, 44);
     [_commitButton commitStyle];
     [_commitButton setTitle:@"完成" forState:UIControlStateNormal];
     [scrollView addSubview:_commitButton];
@@ -254,7 +268,7 @@
         [sizeArr addObject:myCollege.name];
     }
     
-    [ActionSheetStringPicker showPickerWithTitle:@"院系选择" rows:sizeArr initialSelection:self.selectedIndex target:self successAction:@selector(collegeWasSelected:element:) cancelAction:@selector(actionPickerCancelled:) origin:button];
+    [ActionSheetStringPicker showPickerWithTitle:@"选择院系" rows:sizeArr initialSelection:self.selectedIndex target:self successAction:@selector(collegeWasSelected:element:) cancelAction:@selector(actionPickerCancelled:) origin:button];
 }
 
 - (void)collegeWasSelected:(NSNumber *)selectedIndex element:(id)element {
@@ -303,7 +317,7 @@
 - (IBAction)setDatePick:(id)sender {
     self.selectedDate = [NSDate date];
     _actionSheetPicker = [[ActionSheetDatePicker alloc] initWithTitle:@"" datePickerMode:UIDatePickerModeDate selectedDate:self.selectedDate target:self action:@selector(dateWasSelected:element:) origin:sender];
-    self.actionSheetPicker.title = @"生日选择";
+    self.actionSheetPicker.title = @"选择生日";
 
     self.actionSheetPicker.hideCancel = NO;
     [self.actionSheetPicker showActionSheetPicker];
@@ -325,6 +339,7 @@
 }
 
 -(void)showSexChoiceAction:(UIButton *)button{
+    
     sexAction = [[IBActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitlesArray:@[@"男", @"女"]];
     [sexAction setButtonBackgroundColor:[UIColor colorWithHexString:@"#55585f"]];
     [sexAction setButtonTextColor:[UIColor whiteColor]];
@@ -370,6 +385,16 @@
     
     if (userNameField.text.length < 1) {
         [ShowLoading showErrorMessage:@"请输入真实姓名！" view:self.view];
+        return;
+    }
+    
+    if ([school isEqualToString:@""]) {
+        [ShowLoading showErrorMessage:@"请选择学校！" view:self.view];
+        return;
+    }
+    
+    if ([college isEqualToString:@""]) {
+        [ShowLoading showErrorMessage:@"请选择院系！" view:self.view];
         return;
     }
     

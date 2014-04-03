@@ -69,7 +69,7 @@
     
     for (int i = 0; i<count; i++) {
         UIImageView *rongyaoImageView = [[UIImageView alloc]init];
-        rongyaoImageView.frame = CGRectMake(87+(i*32+i*10), (44-32)/2, 32, 32);
+        rongyaoImageView.frame = CGRectMake(87+(i*32+i*10), (44-160/4)/2, 114/4, 160/4);
         BLPerson *honour = [person.honoursArray objectAtIndex:i];
         rongyaoImageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",honour.honourname]];
 //        [rongyaoImageView setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"third_selected@2x"]];

@@ -52,4 +52,7 @@
 +(void)storeArr:(NSMutableArray *)array key:(NSString *)key;
 
 +(NSMutableArray *)getStoreArr:(NSString *)key;
+
++(int)length:(NSString *)string;
+
 @end

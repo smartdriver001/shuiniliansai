@@ -92,7 +92,7 @@
         telphoneField = [[BLTextField alloc]initWithFrame:CGRectMake(16, 192, 294, 44)];
     }
     telphoneField.backgroundColor = [UIColor clearColor];
-    telphoneField.placeholder = @"请留下联系方式，方面我们联系您！";
+    telphoneField.placeholder = @"请留下联系方式，方便我们联系您！";
     telphoneField.font = [UIFont boldSystemFontOfSize:15.0f];
     telphoneField.textColor = [UIColor grayColor];
     telphoneField.delegate = self;
@@ -152,7 +152,9 @@
     NSString *path = [NSString stringWithFormat:@"feedback/?content=%@&contact=%@",content,contact];
     NSString *pathEncode = [BLUtils urlEncode:path];
     
+    [ShowLoading showWithMessage:showloading view:self.view];
     [BLBaseObject globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
+        [ShowLoading hideLoading:self.view];
         if (error) {
             return ;
         }
@@ -160,6 +162,7 @@
             BLBaseObject *baseInfo = [posts objectAtIndex:0];
             if ([baseInfo.msg isEqualToString:@"succ"]) {
                 [ShowLoading showSuccView:self.view message:@"提交成功"];
+                [self performSelector:@selector(dismiss) withObject:nil afterDelay:1.5];
             }
         }
     } path:pathEncode];

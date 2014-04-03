@@ -110,11 +110,17 @@
         req.scene = WXSceneSession;
     }
     [WXApi sendReq:req];
+    
+    [self performSelector:@selector(dismiss) withObject:nil afterDelay:2];
 }
 
 -(void)initImage:(UIImage *)image{
     shareImageView.image = image;
     _image = image;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 }
 
 -(void)dismiss{
