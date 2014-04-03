@@ -38,8 +38,8 @@
     
     [self customizeInterface];
     
-    [WXApi registerApp:@"wx447b1d0be6b17ca0" withDescription:@"篮球大联盟"];
-    
+//    [WXApi registerApp:@"wx447b1d0be6b17ca0" withDescription:@"篮球大联盟"];
+    [WXApi registerApp:@"wx5e7b88b791551353" withDescription:@"水泥联赛（安踏）"];
     // Required
     [APService registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                    UIRemoteNotificationTypeSound |
@@ -68,15 +68,10 @@
         
 //        [self pu];
         [[BLUtils globalCache]setString:@"有消息" forKey:@"push"];
-        [_tabBarController setSelectedIndex:2];
+        [_tabBarController setSelectedIndex:3];
     }
 }
 
--(void)pu{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"消息" message:@"水水水水" delegate:nil cancelButtonTitle:@"忽略" otherButtonTitles:@"查看", nil];
-    alert.delegate = self;
-    [alert show];
-}
 
 -(void)setAPTags:(NSString *)uid{
     
@@ -188,9 +183,7 @@
 }
 
 
-/*! @brief 收到一个来自微信的请求，第三方应用程序处理完后调用sendResp向微信发送结果
  *
- * 收到一个来自微信的请求，异步处理完成后必须调用sendResp发送处理结果给微信。
  * 可能收到的请求有GetMessageFromWXReq、ShowMessageFromWXReq等。
  * @param req 具体请求内容，是自动释放的
  */
@@ -200,7 +193,6 @@
 
 /*! @brief 发送一个sendReq后，收到微信的回应
  *
- * 收到一个来自微信的处理结果。调用一次sendReq后会收到onResp。
  * 可能收到的处理结果有SendMessageToWXResp、SendAuthResp等。
  * @param resp具体的回应内容，是自动释放的
  */
@@ -297,7 +289,7 @@
     
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
     
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"消息" message:[NSString stringWithFormat:@"收到消息\ndate:%@\ntitle:%@\ncontent:%@\njson=%@", [dateFormatter stringFromDate:[NSDate date]],title,content,extras] delegate:nil cancelButtonTitle:@"忽略" otherButtonTitles:@"查看", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"消息" message:[NSString stringWithFormat:@"时间:%@\n标题:%@\n内容:%@", [dateFormatter stringFromDate:[NSDate date]],title,content] delegate:nil cancelButtonTitle:@"忽略" otherButtonTitles:@"查看", nil];
     alert.delegate = self;
     [alert show];
 //    [_infoLabel setText:[NSString stringWithFormat:@"收到消息\ndate:%@\ntitle:%@\ncontent:%@", [dateFormatter stringFromDate:[NSDate date]],title,content]];

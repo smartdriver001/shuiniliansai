@@ -56,8 +56,8 @@
     }
     
     dataSource = [NSMutableArray array];
-    dataSource = @[@"消息",@"关于我们",@"意见反馈",@"评价该软件",@"检查更新"];
-    images = @[@"message",@"lmsm",@"aboutUs",@"yjfk",@"comment",@"gengxin"];
+    dataSource = @[@"修改账户密码",@"绑定手机号",@"消息",@"关于我们",@"意见反馈",@"评价该软件",@"检查更新"];
+    images = @[@"icon_修改密码@2x",@"icon_绑定手机@2x",@"message",@"aboutUs",@"yjfk",@"comment",@"gengxin"];
     int y = 0;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(15, 20, 280, 44);
@@ -66,8 +66,11 @@
     
     for (int i=0; i<dataSource.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        if (i==1) {
+        if (i==2) {
             y = y+11;
+        }
+        if (i == 3) {
+            y += 11;
         }
         button.frame = CGRectMake(20, 20+y+(i*44+i*2), 280, 44);
         [button setBackgroundImage:image forState:UIControlStateNormal];

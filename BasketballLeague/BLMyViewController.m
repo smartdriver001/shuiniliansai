@@ -382,30 +382,21 @@
     
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [[BLUtils globalCache]setString:@"" forKey:@"uid"];
+        personData = nil;
+        [self initLoginView];
+    }
+}
+
 #pragma mark - 退出登陆 -
 -(void)logOff{
-    [[BLUtils globalCache]setString:@"" forKey:@"uid"];
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    button.frame = CGRectMake((320-120)/2, self.view.frame.size.height/2, 120, 45);
-//    [button setTitle:@"登录" forState:UIControlStateNormal];
-//    [button addTarget:self action:@selector(push:) forControlEvents:UIControlEventTouchUpInside];
-//    [button dangerStyle];
-//    
-//    UIView *loginBG = [[UIView alloc]initWithFrame:self.view.bounds];
-//    loginBG.tag = 9090;
-//    loginBG.backgroundColor = [UIColor colorWithHexString:@"#383b44"];
-//    [loginBG addSubview:button];
-//    [self.view addSubview:loginBG];
-//    
-//    [self.view bringSubviewToFront:loginBG];
-//    [self.view addSubview:button];
-//    _tableView.hidden = YES;
-    personData = nil;
-    [self initLoginView];
     
-//    [self addRightNavItemWithImg:@"" hImg:@"" action:nil];
-    
-//    self.title = @"我";
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"确定要退出当前账号？" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+    alert.delegate = self;
+    [alert show];
+
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -955,12 +946,7 @@
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
         tempImage = [self scaleImage:image toScale:1.0];
     }
-//    imageView.image = image;
-    
-//    int NUMBER_OF_CHARS = 10;
-//    char data[NUMBER_OF_CHARS];
-//    for (int x=0;x<NUMBER_OF_CHARS;data[x++] = (char)('A' + (arc4random_uniform(26))));
-//    NSString *file = [[NSString alloc] initWithBytes:data length:NUMBER_OF_CHARS encoding:NSUTF8StringEncoding];
+
     NSString *mfilePath = [NSString stringWithFormat:@"photo.jpg"];
     
     [self saveImage:tempImage WithName:mfilePath];
@@ -1276,10 +1262,10 @@
 
 -(void)LoginAction{
     
-    if (username.text.length <4) {
+    if ([BLUtils length:username.text] < 4) {
         [ShowLoading showErrorMessage:@"账号不能小于4位！" view:self.view];
         return;
-    }else if (password.text.length < 6){
+    }else if ([BLUtils length:password.text] < 6){
         [ShowLoading showErrorMessage:@"密码不能小于6位！" view:self.view];
         return;
     }

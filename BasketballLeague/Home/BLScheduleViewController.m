@@ -707,7 +707,7 @@ typedef enum {
     [self addNavBarTitle:@"全国赛程" action:nil];
     [self addLeftNavBarItem:@selector(leftButtonClick)];
 //    [self addRightNavBarItemImg:@"Filter_normal" hImg:@"Filter_selected" action:@selector(rightButtonClick)];
-    [self addRightNavBarItem:@"刷选" action:@selector(rightButtonClick)];
+    [self addRightNavBarItem:@"筛选" action:@selector(rightButtonClick)];
 }
 
 - (void)didReceiveMemoryWarning

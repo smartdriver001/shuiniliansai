@@ -112,11 +112,11 @@
 //    [scheduleButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:scheduleButton];
 //
-    UIImageView * scheduleImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
+    UIImageView * scheduleImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-15, 50, 50)];
     scheduleImage.image = [UIImage imageNamed:@"quanguosaicheng"];
     [scheduleButton addSubview:scheduleImage];
 //
-    UILabel * scheduleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
+    UILabel * scheduleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-15, 160, 50)];
     scheduleLabel.text = @"赛程战况";
     scheduleLabel.textAlignment = UITextAlignmentCenter;
     scheduleLabel.textColor = [UIColor whiteColor];
@@ -136,11 +136,11 @@
 //    [teamslistButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:teamslistButton];
     
-    UIImageView * teamslistImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
+    UIImageView * teamslistImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-15, 50, 50)];
     teamslistImage.image = [UIImage imageNamed:@"quanguoqiudui"];
     [teamslistButton addSubview:teamslistImage];
     
-    UILabel * teamslistLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
+    UILabel * teamslistLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-15, 160, 50)];
     teamslistLabel.text = @"参赛球队";
     teamslistLabel.textAlignment = UITextAlignmentCenter;
     teamslistLabel.textColor = [UIColor whiteColor];
@@ -160,11 +160,11 @@
 //    [listButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:listButton];
     
-    UIImageView * listImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
+    UIImageView * listImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-15, 50, 50)];
     listImage.image = [UIImage imageNamed:@"paihangbang"];
     [listButton addSubview:listImage];
     
-    UILabel * listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
+    UILabel * listLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-15, 160, 50)];
     listLabel.text = @"排行榜";
     listLabel.textAlignment = UITextAlignmentCenter;
     listLabel.textColor = [UIColor whiteColor];
@@ -184,11 +184,11 @@
 //    [entryButton setBackgroundImage:[UIImage imageNamed:@"button_Click"] forState:UIControlStateHighlighted];
     [self.view addSubview:entryButton];
     
-    UIImageView * entryImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-20, 50, 50)];
+    UIImageView * entryImage = [[UIImageView alloc]initWithFrame:CGRectMake((160-50)/2, (high/2-50)/2-15, 50, 50)];
     entryImage.image = [UIImage imageNamed:@"sousuo"];
     [entryButton addSubview:entryImage];
     
-    UILabel * entryLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-20, 160, 50)];
+    UILabel * entryLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, high/3-15, 160, 50)];
     entryLabel.text = @"搜索";
     entryLabel.textAlignment = UITextAlignmentCenter;
     entryLabel.textColor = [UIColor whiteColor];
@@ -206,7 +206,12 @@
     [self addNavBarTitle:@"" action:nil];
     [self addRightNavBarItem:@"北京" action:@selector(titleClick)];
 
+    NSString *cityid = [[BLUtils globalCache]stringForKey:@"cityId"];
+    if ([cityid isEqualToString:@""]) {
+        [self performSelector:@selector(titleClick) withObject:nil afterDelay:1];
+    }
 }
+
 
 #pragma mark - 定位 -
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation

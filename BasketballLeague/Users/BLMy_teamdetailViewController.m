@@ -176,6 +176,35 @@
 //            }
 //        }
 //    }
+    NSString *home = [[BLUtils globalCache]stringForKey:@"home"];
+    NSString *whose = [[BLUtils globalCache]stringForKey:@"whose"];
+    
+    if ([whose isEqualToString:@"TA的"]) {
+        if ([home isEqualToString:@""]) {
+            if (iPhone5) {
+                _tableView.frame = iPhone5_frame;
+            }else{
+                _tableView.frame = iPhone4_frame;
+            }
+            [self addNavText:@"我的战队" action:nil];
+            [self addLeftNavItem:@selector(leftButtonClick)];
+        }else{
+            [self addNavBar];
+            [self addNavBarTitle:@"我的战队" action:nil];
+            [self addLeftNavBarItem:@selector(leftButtonClick)];
+            
+            _tableView.frame = [BLUtils frame];
+        }
+        
+    }else{
+        if (iPhone5) {
+            _tableView.frame = iPhone5_frame;
+        }else{
+            _tableView.frame = iPhone4_frame;
+        }
+        [self addNavText:@"我的战队" action:nil];
+        [self addLeftNavItem:@selector(leftButtonClick)];
+    }
     
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -360,7 +389,7 @@
     if (myTeamDetailArray.count > 0) {
         BLData * data = [myTeamDetailArray objectAtIndex:0];
         NSArray * dataArray = [NSArray arrayWithObjects:[NSString stringWithFormat:@"  %@",data.createtime],[NSString stringWithFormat:@"  %@",data.captain],[NSString stringWithFormat:@"  %@",data.slogan],[NSString stringWithFormat:@"  %@",data.school],[NSString stringWithFormat:@"  %@",data.college],[NSString stringWithFormat:@"  %@",data.ranking],[NSString stringWithFormat:@"  %@",data.exprienceValue], nil];
-        for (int i = 0; i < dataArray.count; i++) {
+        for (int i = 0; i < dataArray.count-1; i++) {
             UILabel * headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, i * 44, 320 - 85, 44)];
             headerLabel.textAlignment = UITextAlignmentLeft;
             headerLabel.textColor = [UIColor colorWithHexString:@"FFFFFF"];
@@ -389,18 +418,18 @@
         UIImageView *jyzBG = [[UIImageView alloc]init];
         jyzBG.frame = CGRectMake(136, 44*(dataArray.count-1)+19, 140, 6);
         jyzBG.image = [UIImage imageNamed:@"jyz_bg"];
-        [header addSubview:jyzBG];
+//        [header addSubview:jyzBG];
         
         UIImageView *jyzProgress = [[UIImageView alloc]init];
         jyzProgress.image = [UIImage imageNamed:@"jyz_progress"];
-        [header addSubview:jyzProgress];
+//        [header addSubview:jyzProgress];
         
         UILabel *jyzPer = [[UILabel alloc]initWithFrame:CGRectMake(274, 44*(dataArray.count-1)+8, 320-274, 25)];
         jyzPer.backgroundColor = [UIColor clearColor];
         jyzPer.textColor = [UIColor whiteColor];
         jyzPer.textAlignment = UITextAlignmentCenter;
         jyzPer.font = [UIFont boldSystemFontOfSize:13.0f];
-        [header addSubview:jyzPer];
+//        [header addSubview:jyzPer];
         
         /*[NSArray arrayWithObjects:@"等级",@"村代表队",@"乡镇代表队",@"县代表队",@"市代表队",@"省代表队",@"国家代表队", nil];*/
         float max = 0;
@@ -422,11 +451,11 @@
         if (per>1.0) {
             per = 1.0;
         }
-        jyzPer.text = [NSString stringWithFormat:@"%.0f%@",per*100,@"%"];
+//        jyzPer.text = [NSString stringWithFormat:@"%.0f%@",per*100,@"%"];
         
-        float progress =  138.0/100.0;
+//        float progress =  138.0/100.0;
         
-        jyzProgress.frame = CGRectMake(137, 44*(dataArray.count-1)+19+1, progress*per*100, 4);
+//        jyzProgress.frame = CGRectMake(137, 44*(dataArray.count-1)+19+1, progress*per*100, 4);
 /////////////////经验值
         
     }
@@ -495,7 +524,11 @@
             [memberImageView setImageWithURL:[NSURL URLWithString:member.icon] placeholderImage:[UIImage imageNamed:@"placeholder"]];
             memberImageView.userInteractionEnabled = YES;
             [scrollview addSubview:memberImageView];
-            
+            if (i == 0) {
+                UIImageView *leaderImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 35, 35)];
+                leaderImageView.image = [UIImage imageNamed:@"ic_teamleader"];
+                [memberImageView addSubview:leaderImageView];
+            }
             UIButton * memButton = [UIButton buttonWithType:UIButtonTypeCustom];
             memButton.frame = CGRectMake(0, 0, 70, 70);
             memButton.backgroundColor = [UIColor clearColor];
@@ -618,58 +651,7 @@
 }
 
 -(void)requestMy_teamdetail:(NSString *)uid from:(NSString *)from{
-    NSString *homeString = (NSString *)[[BLUtils globalCache]stringForKey:@"home"] ;
-    if ([from isEqualToString:@"visitor"] && ![homeString isEqualToString:@"首页"]) {
-//        [self addNavText:@"我的战队" action:nil];
-//        [self addLeftNavItem:@selector(leftButtonClick)];
-//        
-//        if (iPhone5) {
-//            _tableView.frame = iPhone5_frame;
-//        }else{
-//            _tableView.frame = iPhone4_frame;
-//        }
-        if (ios7) {
-            navHigh = 64;
-        }else{
-            navHigh = 44;
-        }
-        [self addNavBar];
-        [self addNavBarTitle:@"TA的战队" action:nil];
-        [self addLeftNavBarItem:@selector(leftButtonClick)];
-        _tableView.frame = [BLUtils frame1];
-
-    }else if(from && [homeString isEqualToString:@"首页"]){
-        if (ios7) {
-            navHigh = 64;
-        }else{
-            navHigh = 44;
-        }
-        [self addNavBar];
-        [self addNavBarTitle:@"TA的战队" action:nil];
-        [self addLeftNavBarItem:@selector(leftButtonClick)];
-        _tableView.frame = [BLUtils frame1];
-
-    }else if([from isEqualToString:@""] && [homeString isEqualToString:@""]){
-        [self addNavText:@"TA的战队" action:nil];
-        [self addLeftNavItem:@selector(leftButtonClick)];
-//        [self addRightNavItemWithImg:@"edit_normal" hImg:@"edit_press" action:@selector(rightButtonClick)];
-        if (iPhone5) {
-            _tableView.frame = iPhone5_frame;
-        }else{
-            _tableView.frame = iPhone4_frame;
-        }
-
-    }else{
-        [self addNavText:@"我的战队" action:nil];
-        [self addLeftNavItem:@selector(leftButtonClick)];
-//        [self addRightNavItemWithImg:@"edit_normal" hImg:@"edit_press" action:@selector(rightButtonClick)];
-        if (iPhone5) {
-            _tableView.frame = iPhone5_frame;
-        }else{
-            _tableView.frame = iPhone4_frame;
-        }
-    }
-    
+   
     [self requestMy_teamdetail:uid];
     
 }

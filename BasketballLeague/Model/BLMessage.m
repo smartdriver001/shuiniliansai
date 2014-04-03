@@ -25,8 +25,12 @@
         _msg_id = [dic valueForKey:@"msg_id"];
         _totalCnt = [dic valueForKey:@"totalCnt"];
         _isreaded = [dic valueForKey:@"isreaded"];
-        _joinerId = [dic valueForKey:@"extra"][@"uid"];
-        _teamId = [dic valueForKey:@"extra"][@"teamid"];
+//        _joinerId = [dic valueForKey:@"extra"][@"uid"];
+        NSArray *extras = dic[@"extra"];
+        if (extras.count > 0) {
+            _joinerId = dic[@"extra"][@"uid"];
+            _teamId = [dic valueForKey:@"extra"][@"teamid"];
+        }
     }
     return self;
 }
