@@ -64,7 +64,6 @@
     
     matchId = @"";
     
-    
     NSString *home = [[BLUtils globalCache]stringForKey:@"home"];
     NSString *whose = [[BLUtils globalCache]stringForKey:@"whose"];
     
@@ -333,6 +332,7 @@
     commit.hidden = NO;
     share.delegate = self;
     [self presentPopupViewController:share animationType:MJPopupViewAnimationSlideLeftLeft];
+    [[BLUtils globalCache]setString:@"我的荣耀" forKey:@"myhonour"];
 //    [self sendPhoto];
 }
 

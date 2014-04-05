@@ -231,6 +231,8 @@
         req.scene = WXSceneSession;
     }
     [WXApi sendReq:req];
+    
+    [[BLUtils globalCache]setString:@"我的荣耀-某个荣耀-分享成功" forKey:@"myhonour"];
 
     [self performSelector:@selector(dismiss) withObject:nil afterDelay:2.0];
 }

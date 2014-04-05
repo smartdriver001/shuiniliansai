@@ -19,6 +19,7 @@
 #import "BLCityListViewController.h"
 #import "BLSchool.h"
 #import "BLSearchViewController.h"
+#import "MobClick.h"
 
 
 @interface BLHomeViewController ()<CLLocationManagerDelegate,cityListDelegate>
@@ -248,6 +249,8 @@
 
 -(void)schedulelistButtonClick
 {
+    [MobClick event:@"赛程战况" label:@"赛程战况"];
+    
     BLScheduleViewController * scheduleView = [[BLScheduleViewController alloc]initWithNibName:nil bundle:nil];
     scheduleView.title = @"全国赛程";
     scheduleView.condition = @"quanguo";
@@ -259,6 +262,7 @@
 
 -(void)teamslistButtonClick
 {
+    [MobClick event:@"参赛球队" label:@"参赛球队"];
     BLTeamsListViewController * teamsView = [[BLTeamsListViewController alloc]init];
     [teamsView requestTeamsList];
     [self.navigationController pushViewController:teamsView animated:YES];
@@ -267,6 +271,7 @@
 
 -(void)listButtonClick
 {
+    [MobClick event:@"排行榜" label:@"排行榜"];
     BLRankViewController * rankingView = [[BLRankViewController alloc]init];
     [self.navigationController pushViewController:rankingView animated:YES];
     [[BLUtils appDelegate].tabBarController setTabBarHidden:YES animated:YES];
@@ -277,7 +282,7 @@
 //    BLEntryViewController * entryView = [[BLEntryViewController alloc]init];
 //    [self.navigationController pushViewController:entryView animated:YES];
     
-    
+    [MobClick event:@"搜索" label:@"搜索"];
     BLSearchViewController * entryView = [[BLSearchViewController alloc]init];
     [self.navigationController pushViewController:entryView animated:YES];
     

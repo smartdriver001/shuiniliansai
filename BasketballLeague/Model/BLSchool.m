@@ -34,7 +34,7 @@
         
         if (block) {
             if (JSON) {
-                [[BLUtils globalCache]setData:JSON forKey:@"schools" withTimeoutInterval:60*60*24];
+                [[BLUtils globalCache]setData:JSON forKey:@"schools"];
             }
             block([self parseJsonToArray:JSON], nil);
         }

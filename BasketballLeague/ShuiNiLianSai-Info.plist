@@ -18,13 +18,12 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
+				<string>logo57</string>
 				<string>logo120</string>
 				<string>logo114</string>
 			</array>
 		</dict>
 	</dict>
-	<key>CFBundleIcons~ipad</key>
-	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>com.project.bl.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>

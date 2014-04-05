@@ -244,12 +244,12 @@
     adView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
     adView.animationImages = nil;
     if (urls.count<1 || urls == nil) {
-        NSMutableArray *images = [NSMutableArray array];
-        for (int i = 1; i <= 3; i ++)
-        {
-            [images addObject:[UIImage imageNamed:[NSString            stringWithFormat:@"pic%i", i]]];
-        }
-        adView.animationImages = images;
+//        NSMutableArray *images = [NSMutableArray array];
+//        for (int i = 1; i <= 3; i ++)
+//        {
+//            [images addObject:[UIImage imageNamed:[NSString            stringWithFormat:@"pic%i", i]]];
+//        }
+//        adView.animationImages = images;
     }else{
         [adView setAnimationImagesWithURLs:urls];
     }
@@ -488,12 +488,12 @@
     adView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
     adView.animationImages = nil;
     if (urls.count<1) {
-        NSMutableArray *images = [NSMutableArray array];
-        for (int i = 1; i <= 3; i ++)
-        {
-            [images addObject:[UIImage imageNamed:[NSString            stringWithFormat:@"pic%i", i]]];
-        }
-        adView.animationImages = images;
+//        NSMutableArray *images = [NSMutableArray array];
+//        for (int i = 1; i <= 3; i ++)
+//        {
+//            [images addObject:[UIImage imageNamed:[NSString            stringWithFormat:@"pic%i", i]]];
+//        }
+//        adView.animationImages = images;
     }else{
         [adView setAnimationImagesWithURLs:urls];
     }

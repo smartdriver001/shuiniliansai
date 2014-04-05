@@ -51,11 +51,10 @@
 #import "BLTextField.h"
 #import "BLFindPwdViewController.h"
 #import "BLRegViewController.h"
-
-#import "BLGoldViewController.h"
 #import "BLResetPwd.h"
+#import "MobClick.h"
 
-@interface BLMyViewController ()<CXPhotoBrowserDataSource, CXPhotoBrowserDelegate,buttonClickDelegate,IBActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,didClickDelegate,ChangeIconDelegate,LogOffDelegate,InitUID,UITextFieldDelegate>
+@interface BLMyViewController ()<CXPhotoBrowserDataSource, CXPhotoBrowserDelegate,buttonClickDelegate,IBActionSheetDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,didClickDelegate,ChangeIconDelegate,LogOffDelegate,InitUID,UITextFieldDelegate,UIAlertViewDelegate>
 {
     NSArray *imageURLs;
     NSArray *descriptions;
@@ -418,8 +417,10 @@
         BLMyHonourViewController *honour = [[BLMyHonourViewController alloc]initWithNibName:nil bundle:nil];
         honour.title = @"我的荣耀";
         if (personUID) {
+            [MobClick event:@"TA的荣耀" label:@"TA的荣耀"];
             [honour requestData:nil uid:personUID from:fromString isAll:YES];
         }else{
+            [MobClick event:@"我的荣耀" label:@"我的荣耀"];
             [honour requestData:nil uid:uid from:fromString isAll:YES];
         }
 

@@ -17,4 +17,6 @@
 
 #define pageSize @"5"
 
+#define UMENG_APPKEY @"5333b19d56240b869c088d4d"
+
 #endif

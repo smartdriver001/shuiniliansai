@@ -319,7 +319,7 @@ typedef enum {
     
     NSString *cityId = [[BLUtils globalCache]stringForKey:@"cityId"];
     
-    NSString *path = [NSString stringWithFormat:@"paihangbang/?type=%@&size=%d&page=%d&schoolId=%@&datetype=%@&cityid=%@",typeStr,100,pageIndex,schoolId,order,cityId];
+    NSString *path = [NSString stringWithFormat:@"paihangbang/?type=%@&size=%d&page=%d&schoolid=%@&datetype=%@&cityid=%@",typeStr,100,pageIndex,schoolId,order,cityId];
     
 //    [ShowLoading showWithMessage:showloading view:self.view];
     
@@ -451,7 +451,7 @@ typedef enum {
         imageView.image = [UIImage imageNamed:@"orderArrow"];
         [view1 addSubview:imageView];
         
-        _tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 15, 150, high - 15)];
+        _tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(0, 15, 150, high+15)];
         _tableView1.delegate = self;
         _tableView1.dataSource = self;
         _tableView1.tag = 101;

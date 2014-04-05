@@ -53,6 +53,8 @@
     
     share.delegate = self;
     [self presentPopupViewController:share animationType:MJPopupViewAnimationSlideLeftLeft];
+    
+    [[BLUtils globalCache]setString:@"单场比赛-分享成功" forKey:@"myhonour"];
 }
 
 - (UIImage*)screenshot
