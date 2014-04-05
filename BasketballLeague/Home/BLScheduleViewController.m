@@ -233,17 +233,18 @@ typedef enum {
     
     [self removeNOdataView];
     NSString *uid = [[BLUtils globalCache]stringForKey:@"uid"];
+    NSString *cityid = [[BLUtils globalCache]stringForKey:@"cityId"];
     NSString *path;
     if ([_condition isEqualToString:@"quanguo"]) {
-        path = [NSString stringWithFormat:@"schedulelist/?page=%d&size=%@",pageIndex,pageSize];
+        path = [NSString stringWithFormat:@"schedulelist/?page=%d&size=%@&cityid=%@",pageIndex,pageSize,cityid];
 
         if (schoolId) {
-            path = [NSString stringWithFormat:@"schedulelist/?page=%d&size=%d&schoolid=%@",pageIndex,100,schoolId];
+            path = [NSString stringWithFormat:@"schedulelist/?page=%d&size=%d&schoolid=%@&cityid=%@",pageIndex,100,schoolId,cityid];
             [ShowLoading showWithMessage:showloading view:self.view];
         }
         
     }else{
-        path = [NSString stringWithFormat:@"my_gamelist/?uid=%@&page=%d&size=%@",uid,pageIndex,pageSize];
+        path = [NSString stringWithFormat:@"my_gamelist/?uid=%@&page=%d&size=%@&cityid=%@",uid,pageIndex,pageSize,cityid];
     }
     
     [BLBaseObject globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
@@ -270,7 +271,7 @@ typedef enum {
                 if ([_condition isEqualToString:@"quanguo"]) {
                     [scheduleArray removeAllObjects];
                     [_tableView reloadData];
-//                    [self doneLoadingTableViewData];
+                    [self doneReLoadingTableViewData];
                     [self addNoScheduleView];
                 }else{
                     [scheduleArray removeAllObjects];

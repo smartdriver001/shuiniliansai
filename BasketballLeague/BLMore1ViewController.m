@@ -13,6 +13,7 @@
 #import "BLFeedbackViewController.h"
 #import "BLLmsmViewController.h"
 #import "BLMyMessageViewController.h"
+#import "BLUpdateApp.h"
 
 @interface BLMore1ViewController () {
     
@@ -56,8 +57,8 @@
     }
     
     dataSource = [NSMutableArray array];
-    dataSource = @[@"修改账户密码",@"绑定手机号",@"消息",@"关于我们",@"意见反馈",@"评价该软件",@"检查更新"];
-    images = @[@"icon_修改密码@2x",@"icon_绑定手机@2x",@"message",@"aboutUs",@"yjfk",@"comment",@"gengxin"];
+    dataSource = @[@"消息",@"关于我们",@"意见反馈",@"评价该软件",@"检查更新"];
+    images = @[@"message",@"lmsm",@"aboutUs",@"yjfk",@"comment",@"gengxin"];
     int y = 0;
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(15, 20, 280, 44);
@@ -66,11 +67,8 @@
     
     for (int i=0; i<dataSource.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        if (i==2) {
+        if (i==1) {
             y = y+11;
-        }
-        if (i == 3) {
-            y += 11;
         }
         button.frame = CGRectMake(20, 20+y+(i*44+i*2), 280, 44);
         [button setBackgroundImage:image forState:UIControlStateNormal];
@@ -140,9 +138,8 @@
 //        viewController.title = [dataSource objectAtIndex:button.tag];
 //        
 //    }else
-        if (button.tag == 0){
+    if (button.tag == 0){
         
-//        viewController = [[BLMessageViewController alloc] initWithStyle:UITableViewStylePlain];
         viewController = [[BLMyMessageViewController alloc]initWithNibName:nil bundle:nil];
         
     }else if (button.tag == 1){
@@ -160,14 +157,28 @@
         return;
     
     }else if (button.tag == 4){
-//        [ShowLoading showErrorMessage:@"开发中..." view:self.view];
-//        return;
         
-        NSString * url = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appstoreID];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        NSString *path = @"update/index/?type=ios";
+        
+        [ShowLoading showWithMessage:showloading view:self.view];
+        [BLUpdateApp globalTimelinePostsWithBlock:^(NSArray *posts, NSError *error) {
+            
+            [ShowLoading hideLoading:self.view];
+            
+            if (error) {
+                return ;
+            }
+            
+            if (posts.count > 0) {
+                BLUpdateApp *update = posts[0];
+                if ([update.msg isEqualToString:@"succ"]) {
+                    [self matchVersion:update.version message:update.content];
+                }
+            }
+            
+        } path:path];
+        
         return;
-//        appstoreID
-//        viewController = [[BLAboutUsViewController alloc] initWithNibName:nil bundle:nil];
         
     }else{
         
@@ -179,6 +190,26 @@
     [self.navigationController pushViewController:viewController animated:YES];
     [appDelegate.tabBarController setTabBarHidden:YES animated:YES];
     
+}
+
+-(void)matchVersion:(NSString *)version message:(NSString *)message{
+    
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    if (![version isEqualToString:app_Version]) {
+        UIAlertView *alerview = [[UIAlertView alloc]initWithTitle:@"更新提示" message:message delegate:self cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
+        alerview.delegate = self ;
+        [alerview show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 0) {
+        NSString * url = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", appstoreID];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    }
 }
 
 @end

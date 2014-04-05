@@ -49,7 +49,7 @@
     titleLabel.textAlignment = UITextAlignmentCenter;
     [self addSubview:titleLabel];
     
-    NSArray *titles = @[@"得分",@"栏板",@"助攻",@"远投",@"抢断",@"盖帽"];
+    NSArray *titles = @[@"得分",@"篮板",@"助攻",@"远投",@"抢断",@"盖帽"];
     for (int i=0; i<6; i++) {
         UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(i*((320-91)/6), 0,(320-91)/6, 30)];
         titleLabel.backgroundColor = [UIColor clearColor];

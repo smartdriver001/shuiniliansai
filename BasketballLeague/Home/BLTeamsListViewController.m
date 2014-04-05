@@ -644,20 +644,21 @@ typedef enum {
     /*place	int	false		比赛地点	根据选择赛点查询 (数值)
      page	int	false		第几页	默认1
      size	int	false		每页条数	默认10*/
+    NSString *cityid = [[BLUtils globalCache]stringForKey:@"cityId"];
     
     NSString *path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%@",pageIndex,pageSize];
     
     if ([order isEqualToString:@""]) {
         if (schoolId) {
-            path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%d?schoolid=%@", pageIndex,100,schoolId];
+            path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%d?schoolid=%@&cityid=%@", pageIndex,100,schoolId,cityid];
         }else{
-           path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%d", pageIndex,100];
+           path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%d&cityid=%@", pageIndex,100,cityid];
         }
     }else{
-        path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%d&ord=%@", pageIndex,100,order];
+        path = [NSString stringWithFormat:@"teamslist/?page=%d&size=%d&ord=%@&cityid=%@", pageIndex,100,order,cityid];
         if (schoolId) {
             [ShowLoading showWithMessage:showloading view:self.view];
-            path = [NSString stringWithFormat:@"teamslist/?ord=%@&page=%d&size=%d&&schoolid=%@",order, pageIndex,100,schoolId];
+            path = [NSString stringWithFormat:@"teamslist/?ord=%@&page=%d&size=%d&&schoolid=%@&cityid=%@",order, pageIndex,100,schoolId,cityid];
         }
     }
     

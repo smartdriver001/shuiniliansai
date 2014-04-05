@@ -590,8 +590,11 @@
     BLEditingViewController *editView = [[BLEditingViewController alloc]initWithNibName:@"BLEditingViewController" bundle:nil];
     
     [self.navigationController pushViewController:editView animated:YES];
-    
-    NSArray *personInfo = @[personData.sex,personData.birth,personData.heightS,personData.weightS,personData.ballnumber,personData.school,personData.college,personData.shoes,personData.size];
+    NSString *birth = (personData.birth == nil)?@"":personData.birth ;
+    if (!personData) {
+        return;
+    }
+    NSArray *personInfo = @[personData.sex,birth,personData.heightS,personData.weightS,personData.ballnumber,personData.school,personData.college,personData.shoes,personData.size];
     
     editView.personData = personInfo;
     [[BLUtils appDelegate].tabBarController setTabBarHidden:YES animated:YES];
@@ -1373,12 +1376,15 @@
         if (i==0) {
             textfield.placeholder = @"当前密码";
             [textfield setReturnKeyType:UIReturnKeyNext];
+            textfield.secureTextEntry = YES;
         }else if (i==1){
             textfield.placeholder = @"新密码";
             [textfield setReturnKeyType:UIReturnKeyNext];
+            textfield.secureTextEntry = YES;
         }else{
             textfield.placeholder = @"确认新密码";
             [textfield setReturnKeyType:UIReturnKeyDone];
+            textfield.secureTextEntry = YES;
         }
         
         textfield.delegate = self;
@@ -1430,6 +1436,7 @@
                 if (!personData) {
                     [self requestData:resetPwd.uid];
                 }
+                [self initRgithButton];
             }else{
                 [ShowLoading showErrorMessage:resetPwd.msg view:self.view];
             }

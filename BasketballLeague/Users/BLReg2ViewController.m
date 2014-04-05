@@ -69,8 +69,9 @@
     size = @"";
     school = @"";
     college = @"";
-    height = @"";
-    weight = 0;
+//    height = @"";
+//    weight = 0;
+    birthday = @"";
     
 }
 
@@ -273,7 +274,7 @@
 
 - (void)collegeWasSelected:(NSNumber *)selectedIndex element:(id)element {
     self.selectedIndex = [selectedIndex intValue];
-    if ([selectedIndex intValue]>collegss.count) {
+    if ([selectedIndex intValue]>=collegss.count) {
         return;
     }
     BLCollege *myCollege = [collegss objectAtIndex:[selectedIndex intValue]];

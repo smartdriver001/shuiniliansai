@@ -41,6 +41,9 @@
     NSData *data = [[BLUtils globalCache]dataForKey:@"city"];
     if (!data) {
         [self requestCity];
+    }else{
+        NSString *cityId = [[BLUtils globalCache]stringForKey:@"cityId"];
+        [self requestSchool:cityId];
     }
 }
 
@@ -109,11 +112,13 @@
 - (void)addLeftNavItem:(SEL)action
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     if (ios7) {
-        btn.frame = CGRectMake(0, 0, 25, 25);
+        button.frame = CGRectMake(0, 0, 66-30, 44);
+        btn.frame = CGRectMake(0, (44-25)/2, 25, 25);
     }else{
-        btn.frame = CGRectMake(12, 9.5, 25, 25);
+        button.frame = CGRectMake(0, 0, 60, 44);
+        btn.frame = CGRectMake((60-25)/2-5, 9.5, 25, 25);
     }
     
     [btn setBackgroundImage:[UIImage imageNamed:@"back_normal@2x"]
@@ -122,7 +127,12 @@
                    forState:UIControlStateHighlighted];
     [btn addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     
-    [self addCustomBtnToNavBar:0 btn:btn];
+    
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [button addSubview:btn];
+    
+    [self addCustomBtnToNavBar:0 btn:button];
+    
 }
 
 - (void)addLeftNavItemAndTextImg:(NSString *)img Text:(NSString *)text :(SEL)action
@@ -143,7 +153,7 @@
         if (ios7) {
             btn.frame = CGRectMake(0, 0, 36, 25);
         }else{
-            btn.frame = CGRectMake(12, 9.5, 30, 25);
+            btn.frame = CGRectMake(0, 0, 60, 44);
         }
         [btn setTitle:text forState:UIControlStateNormal];
         [btn setTitle:text forState:UIControlStateHighlighted];
@@ -217,7 +227,7 @@
 {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 200, 44);
-    [btn setTitle:text forState:UIControlStateNormal];
+//    [btn setTitle:text forState:UIControlStateNormal];
     btn.titleLabel.textAlignment = UITextAlignmentCenter;
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //    [btn setTitleColor:COLOR_WITH_RGB(190, 215, 30) forState:UIControlStateHighlighted];
@@ -243,7 +253,7 @@
     }else{
         [adView setAnimationImagesWithURLs:urls];
     }
-    adView.animationDuration = 4;
+    adView.animationDuration = urls.count*3;
     adView.animationRepeatCount = -1;
     [adView startAnimating];
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
@@ -260,7 +270,7 @@
     if (ios7) {
         btn.frame = CGRectMake(0, 0, 38, 44);
     }else{
-        btn.frame = CGRectMake(0, 0, 60, 44);
+        btn.frame = CGRectMake(-((60-38)/2+6), 0, 60, 44);
     }
     [btn setTitle:text forState:UIControlStateNormal];
 //    [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 0)];
@@ -281,7 +291,7 @@
     UIBarButtonItem *item ;
     
     if (!ios7) {
-        view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, 44)];
+        view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 38, 44)];
         view.backgroundColor = [UIColor clearColor];
         [view addSubview:btn];
         item = [[UIBarButtonItem alloc] initWithCustomView:view];
@@ -350,7 +360,7 @@
         [self addNavBarTitle:@"" andDetailTitle:@"" action:nil];
         [self addADNavBar];
     }
-    
+
 }
 
 -(void)initURLS{
@@ -381,8 +391,9 @@
         y = 20;
     }
     
-    UIView  *view = [[UIView alloc]initWithFrame:CGRectMake(0, y, 60, 44)];
-    view.backgroundColor = [UIColor clearColor];
+    UIButton  *view = [UIButton buttonWithType:UIButtonTypeCustom];
+    view.frame = CGRectMake(0, y, 60, 44);
+    [view addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     
     btn.frame = CGRectMake(17.5, 9.5, 25, 25);
@@ -486,7 +497,7 @@
     }else{
         [adView setAnimationImagesWithURLs:urls];
     }
-    adView.animationDuration = 4;
+    adView.animationDuration = urls.count*3;
     adView.animationRepeatCount = -1;
     [adView startAnimating];
     

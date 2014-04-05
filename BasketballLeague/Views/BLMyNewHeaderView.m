@@ -114,11 +114,11 @@
         UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(4+i*50+i*2.2, 140+5, 50, 50)];
         UIImageView *lineImageView = [[UIImageView alloc]initWithFrame:CGRectMake(12, 27, 25, 2)];
         lineImageView.image = [UIImage imageNamed:@"line"];
-        [imageview addSubview:lineImageView];
+//        [imageview addSubview:lineImageView];
         imageview.image = [UIImage imageNamed:@"singleBG"];
         [self addSubview:imageview];
         
-        UILabel *valueLabel = [[UILabel alloc]initWithFrame:CGRectMake(4+i*50+i*2.2, 140+12, 50, 25)];
+        UILabel *valueLabel = [[UILabel alloc]initWithFrame:CGRectMake(4+i*50+i*2.2, 140+12+5, 50, 25)];
         valueLabel.backgroundColor = [UIColor clearColor];
 //        valueLabel.text = @"25";
         valueLabel.tag = 100111+i;
@@ -137,8 +137,8 @@
         [self addSubview:fenmuLabel];
 
         MDRadialProgressView *radialView2 = [[MDRadialProgressView alloc]initWithFrame:CGRectMake(4+i*50+i*2.2, 140+5+4, 46, 46)];
-//        radialView2.progressTotal = 100;
-//        radialView2.progressCounter = 25;
+        radialView2.progressTotal = 100;
+        radialView2.progressCounter = 25;
         radialView2.theme.thickness = 12;
         radialView2.theme.incompletedColor = [UIColor clearColor];
         if (i == 0) {
@@ -188,9 +188,9 @@
         UILabel *fenziLabel = (UILabel *)[self viewWithTag:100111+i];
         fenziLabel.text = [NSString stringWithFormat:@"%@",[countsArray objectAtIndex:i]];
         
-        MDRadialProgressView *radialView = (MDRadialProgressView *)[self viewWithTag:10+i];
-        radialView.progressTotal = [person.fenmu intValue];
-        radialView.progressCounter = [person.fenmu intValue]/4;//[[countsArray objectAtIndex:i]intValue];
+//        MDRadialProgressView *radialView = (MDRadialProgressView *)[self viewWithTag:10+i];
+//        radialView.progressTotal = [person.fenmu intValue];
+//        radialView.progressCounter = [person.fenmu intValue]/4;//[[countsArray objectAtIndex:i]intValue];
     }
     
 //    _idLabel.text = [NSString stringWithFormat:@"ID：%@",person.uid];

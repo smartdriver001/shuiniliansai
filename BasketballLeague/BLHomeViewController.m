@@ -41,6 +41,7 @@
 }
 
 -(void)titleCityName:(NSString *)cityName{
+    [[BLUtils globalCache]setString:cityName forKey:@"cityName"];
     [self addRightNavBarItem:cityName action:@selector(titleClick)];
     NSString *cityId = [[BLUtils globalCache]stringForKey:@"cityId"];
     [self requestSchool:cityId];
@@ -204,7 +205,15 @@
     
     [self addNavBar];
     [self addNavBarTitle:@"" action:nil];
-    [self addRightNavBarItem:@"北京" action:@selector(titleClick)];
+    NSString *cityName = [[BLUtils globalCache]stringForKey:@"cityName"];
+   
+    if (cityName.length > 1) {
+        [self addRightNavBarItem:cityName action:@selector(titleClick)];
+    }else{
+        [self addRightNavBarItem:@"北京" action:@selector(titleClick)];
+        [[BLUtils globalCache]setString:@"2" forKey:@"cityId"];
+        [[BLUtils globalCache]setString:@"北京" forKey:@"cityName"];
+    }
 
     NSString *cityid = [[BLUtils globalCache]stringForKey:@"cityId"];
     if ([cityid isEqualToString:@""]) {

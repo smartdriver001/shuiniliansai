@@ -302,6 +302,7 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    [[BLUtils globalCache]setString:@"" forKey:@"load"];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

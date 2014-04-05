@@ -241,6 +241,7 @@ typedef enum {
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NSString *str = @"证书是密钥对的非秘密的部分。将它发送给其它人是安全的，比如通过SSL通讯的过程中就会包含证书。然而，对于私钥，当然是私有的。它是秘密的。你的私钥只对你有用，对其他人没用。要重视的是：如果你没有私钥的话，就无法使用证书。";
     
     BLMessage *myMSG = [_dataArray objectAtIndex:indexPath.row];
     size = [myMSG.message sizeWithFont:[UIFont systemFontOfSize:14.0f] constrainedToSize:CGSizeMake(320-36, 2000) lineBreakMode:NSLineBreakByCharWrapping];
